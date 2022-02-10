@@ -5,23 +5,3 @@ AC'D 2/2
 AC' 2/2
 C'D 2/2
 *ABC' 3/3
-
-
-Liste des règles RS1 à RS8 appliquées avec succès :
-
-Test 80 : RS8 de A sur BD  ->  rkMin(BD) = 2  ->  BD 2/2
-Test 192 : RS8 de B sur AD  ->  rkMin(AD) = 2  ->  AD 2/2
-Test 221 : RS5 de B sur AC'D  ->  rkMax(ABC'D) = 3  ->  ABC'D 3/1
-Test 303 : RS7 de AB sur D  ->  rkMin(AB) = 1  ->  AB 2/1
-Test 311 : RS7 de AB sur AD  ->  rkMin(AB) = 1  ->  AB 2/1
-Test 319 : RS7 de AB sur BD  ->  rkMin(AB) = 1  ->  AB 2/1
-Test 529 : RS1 de AC' sur ABC'  ->  rkMin(ABC') = 2  ->  ABC' 3/2
-Test 593 : RS1 de AC' sur ABC'D  ->  rkMin(ABC'D) = 2  ->  ABC'D 3/2
-Test 864 : RS8 de D sur AB  ->  rkMin(AB) = 2  ->  AB 2/2
-Test 1185 : RS1 de BD sur BC'D  ->  rkMin(BC'D) = 2  ->  BC'D 3/2
-Test 1313 : RS1 de ABD sur ABC'D  ->  rkMin(ABC'D) = 3  ->  ABC'D 3/3
-Test 1488 : RS8 de AC'D sur BC'  ->  rkMin(BC') = 2  ->  BC' 2/2
-Test 1496 : RS8 de AC'D sur ABC'  ->  rkMin(ABC') = 3  ->  ABC' 3/3
-Test 1552 : RS8 de AC'D sur BC'D  ->  rkMin(BC'D) = 3  ->  BC'D 3/3
-
-Nombre total de tests effectués : 1800
