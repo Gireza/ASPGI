@@ -1,0 +1,7 @@
+(* Exemple de lemme à 4 points p. 114 *)
+A B C' D
+ABD 3/3
+AC'D 2/2
+AC' 2/2
+C'D 2/2
+*ABC' 3/3
