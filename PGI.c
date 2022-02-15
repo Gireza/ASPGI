@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdbool.h>
 
 // POUR RAPPEL
 // (* Exemple de lemme à 4 points p. 114 *)
@@ -43,99 +44,131 @@ int main()
 
     // APPLICATION DES REGLES RS1 à RS8
     int x = 1;
+
+    bool continueSat = true;
     while (x <= nbNoeuds)
     {   
-        
         int y = 1;
-        while (y <= nbNoeuds)
+        while (y <= nbNoeuds && continueSat)
         {
             // (RS1) si X ⊆ Y et rkMin(X) > rkMin(Y) alors rkMin(Y) prend la valeur de rkMax rkMin(X)
             numTest++;
-            if ((x & y) == x && rkMin[x] > rkMin[y])
+            if ((x & y) == x && rkMin[x] > rkMin[y] && continueSat )
             {
                 rkMin[y] = rkMin[x];
                           printf("Test %d : RS1 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
                 fprintf(fichier, "Test %d : RS1 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
+                continueSat = false;
+                y = 0;
+                x = 0;
             }
             // fin (RS1)
 
             // (RS3) si  X ⊆ Y et rkMax(Y) < rKMax(X) alors rkMax(X) prend la valeur de rkMax(Y)
             numTest++;
-            if ((x & y) == x && rkMax[y] < rkMax[x])
+            if ((x & y) == x && rkMax[y] < rkMax[x] && continueSat)
             {
                 rkMax[x] = rkMax[y];
                           printf("Test %d : RS3 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMax[x], nomNoeud[x], rkMax[x], rkMin[x]);
                 fprintf(fichier, "Test %d : RS3 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMax[x], nomNoeud[x], rkMax[x], rkMin[x]);
+                continueSat = false;
+                 y = 0;
+                x = 0;
             }
             // fin (RS3)
 
             // (RS2) si Y ⊆ X et rkMin(Y) > rkMin(X) alors rkMin(X) prend la valeur de rkMin(Y)
             numTest++;
-            if ((x & y) == y && rkMin[y] > rkMin[x])
+            if ((x & y) == y && rkMin[y] > rkMin[x] && continueSat)
             {
                 rkMin[x] = rkMin[y];
                           printf("Test %d : RS2 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
                 fprintf(fichier, "Test %d : RS2 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
+                continueSat = false;
+                 y = 0;
+                x = 0;
+
             }
             // fin (RS2)
 
             // (RS4) si Y ⊆ X et rkMax(Y) > rkMax(X) alors rkMax(Y) prend la valeur de rkMax(X)
             numTest++;
-            if ((x & y) == y && rkMax[y] > rkMax[x])
+            if ((x & y) == y && rkMax[y] > rkMax[x] && continueSat)
             {
                 rkMax[y] = rkMax[x];
                           printf("Test %d : RS4 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMax[y], nomNoeud[y], rkMax[y], rkMin[y]);
                 fprintf(fichier, "Test %d : RS4 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMax[y], nomNoeud[y], rkMax[y], rkMin[y]);
+                continueSat = false;
+                 y = 0;
+                x = 0;
+    
             }
             // fin (RS4)
 
             // (RS5) si rkMax(X) + rkMax(Y) - rkMin(X & Y) < rkMax(X | Y) alors rkMax(X | Y) prend la valeur de rkMax(X) + rkMax(Y) - rkMin(X & Y)
             // (RS5) si rkMax(X) + rkMax(Y) − rkMin(X ∩ Y) < rkMax(X ∪ Y) alors rkMax(X ∪ Y) prend la valeur de rkMax(X) + rkMax(Y) − rkMin(X ∩ Y)
             numTest++;
-            if (rkMax[x] + rkMax[y] - rkMin[x & y] < rkMax[x | y])
+            if (rkMax[x] + rkMax[y] - rkMin[x & y] < rkMax[x | y] && continueSat)
             {
                 rkMax[x | y] = rkMax[x] + rkMax[y] - rkMin[x & y];
                           printf("Test %d : RS5 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x | y], rkMax[x | y], nomNoeud[x | y], rkMax[x |y], rkMin[x | y]);
                 fprintf(fichier, "Test %d : RS5 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x | y], rkMax[x | y], nomNoeud[x | y], rkMax[x |y], rkMin[x | y]);
+                continueSat = false;
+                 y = 0;
+                x = 0;            
             }
             // fin (RS5)
 
             // (RS6) si rkMax(X) + rkMax(Y) - rkMin(X | Y) < rkMax(X & Y) alors rkMax(X & Y) prend la valeur de rkMax(X) + rkMax(Y) - rkMin(X | Y)
             // (RS6) si rkMax(X) + rkMax(Y) − rkMin(X ∪ Y) < rkMax(X ∩ Y) alors rkMax(X ∩ Y) prend la valeur de rkMax(X) + rkMax(Y) − rkMin(X ∪ Y)
             numTest++;
-            if (rkMax[x] + rkMax[y] - rkMin[x | y] < rkMax[x & y])
+            if (rkMax[x] + rkMax[y] - rkMin[x | y] < rkMax[x & y] && continueSat)
             {
                 rkMax[x & y] = rkMax[x] + rkMax[y] - rkMin[x | y];
                           printf("Test %d : RS6 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x & y], rkMax[x & y], nomNoeud[x & y], rkMax[x & y], rkMin[x & y]);
                 fprintf(fichier, "Test %d : RS6 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x & y], rkMax[x & y], nomNoeud[x & y], rkMax[x & y], rkMin[x & y]);
+                continueSat = false;
+                 y = 0;
+                x = 0;             
             }
             // fin (RS6)
 
             // (RS7) si rkMin(X & Y) + rkMin(X | Y) - rkMax(Y) > rkMin(X) alors rkMin(X) prend la valeur de rkMin(X & Y) + rkMin(X | Y) - rkMax(Y)
             // (RS7) si rkMin(X ∩ Y) + rkMin(X ∪ Y) − rkMax(Y) > rkMin(X) alors rkMin(X) prend la valeur de rkMin(X ∩ Y) + rkMin(X ∪ Y) − rkMax(Y)
-            numTest++;
-            if (rkMin[x & y] + rkMin[x | y] - rkMax[y] > rkMin[x])
+          numTest++;
+            if (rkMin[x & y] + rkMin[x | y] - rkMax[y] > rkMin[x] && continueSat)
             {
-                rkMin[x] = rkMin[x & y] + rkMin[x | y] - rkMax[y] > rkMin[x];
+                rkMin[x] = rkMin[x & y] + rkMin[x | y] - rkMax[y];
                           printf("Test %d : RS7 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
                 fprintf(fichier, "Test %d : RS7 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
+                continueSat = false; 
+                y = 0;
+                x = 0;
+               
             }
             // fin (RS7)
 
             // (RS8) si rkMin(X & Y) + rkMin(X | Y) - rkMax(X) > rkMin(Y) alors rkMin(Y) prend la valeur de rkMin(X & Y) + rkMin(X | Y) - rkMax(X)
             // (RS8) si rkMin(X ∩ Y) + rkMin(X ∪ Y) − rkMax(X) > rkMin(Y) alors rkMin(Y) prend la valeur de rkMin(X ∩ Y) + rkMin(X ∪ Y) − rkMax(X)
             numTest++;
-            if (rkMin[x & y] + rkMin[x | y] - rkMax[x] > rkMin[y])
+            if (rkMin[x & y] + rkMin[x | y] - rkMax[x] > rkMin[y] && continueSat)
             {
                 rkMin[y] = rkMin[x & y] + rkMin[x | y] - rkMax[x];
                           printf("Test %d : RS8 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
                 fprintf(fichier, "Test %d : RS8 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
+                continueSat = false;
+                 y = 0;
+                x = 0;                
             }
             // fin (RS8)
+            /*printf("y =%d",y);
+            printf("x=%d",x);*/
             y++;
         }
+        continueSat = true;
         x++;
     }
               printf("\nNombre total de tests effectués : %d\n", numTest);
     fprintf(fichier, "\nNombre total de tests effectués : %d\n", numTest);
 }
+ 
