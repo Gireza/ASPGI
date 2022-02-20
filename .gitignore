@@ -1,3 +1,6 @@
+# System files
+.DS_Store
+
 # Prerequisites
 *.d
 
@@ -8,7 +11,7 @@
 *.elf
 
 #Ignore text
-*.txt
+# *.txt
 
 # Linker output
 *.ilk
@@ -38,6 +41,7 @@
 *.i*86
 *.x86_64
 *.hex
+*.e
 
 # Debug files
 *.dSYM/
