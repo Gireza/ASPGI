@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include "utile.c"
 
 #define TAILLE_MAX 100
 //#define xstr(s) str(s) // https://xrenault.developpez.com/tutoriels/c/scanf/#Lno-5-3
@@ -63,7 +64,7 @@ int main()
             // REMPLISSAGE *nomNoeud[] avec chaque point de E définit dans l'énoncé (deuxième ligne du fichier.txt)
 
             // chaque point de E est à enregistrer à un index == à une puissande de 2;
-            idTabNoeud = (int)pow(2, (double)pow2idNoeud);
+            idTabNoeud = puissance(pow2idNoeud);
             // on ajoute 1 à la taille mémoire allouée (malloc) à la case du tableau pour le caractère terminal \0
             nomNoeud[idTabNoeud] = malloc(strlen(strToken) + 1);
             // copie de la valeur parsée dans la case voulue
