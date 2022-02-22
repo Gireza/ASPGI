@@ -58,6 +58,7 @@ int main()
     // APPLICATION DES REGLES RS1 à RS8
     continueSat = true;
     x = 1;
+    
 
     while (x <= nbNoeuds)
     {
