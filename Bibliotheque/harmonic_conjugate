@@ -1,0 +1,29 @@
+(* harmonic_conjugate p. 154 *)
+A B C P Q R P' Q' R' U U' D D' O
+ABC 2/2
+AB 2/2
+AC 2/2
+BC 2/2
+PQR 3/3
+P'Q'R' 3/3
+ABRR' 4/4
+ABR 3/3
+ABQ 3/3
+AQR 2/2
+BPR 2/2
+CPQ 2/2
+APU 2/2
+BQU 2/2
+DRU 2/2
+ABR' 3/3
+ABQ' 3/3
+AQ'R' 2/2
+BP'R' 2/2
+CP'Q' 2/2
+AP'U' 2/2
+BQ'U' 2/2
+D'R'U' 2/2
+ABCDD' 2/2
+PP'O 2/2
+QQ'O 2/2
+*DD' 1/1

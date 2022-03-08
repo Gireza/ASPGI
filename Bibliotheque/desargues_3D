@@ -1,0 +1,12 @@
+(* desargues_3D p. 149 *)
+P Q R P' Q' R' O alpha beta gamma
+PP' 2/2
+QQ' 2/2
+RR' 2/2
+PP'O 2/2
+QQ'O 2/2
+RR'O 2/2
+PQR 3/3
+P'Q'R' 3/3
+PQRP'Q'R' 4/4
+*alphabetagamma 2/2

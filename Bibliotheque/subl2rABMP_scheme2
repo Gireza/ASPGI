@@ -1,0 +1,6 @@
+(* subl2rABMP_scheme p. 143 *)
+A B C A' B' C' O M
+ABC 3/3
+ABCA'B'C'O 3/3
+MA' 1/1
+*ABCM 3/3

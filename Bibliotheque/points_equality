@@ -1,0 +1,5 @@
+(* points_equality p. 139 *)
+A B C D
+ABC 3/3
+CD 1/1
+*ABD 3/3
