@@ -25,12 +25,15 @@ void reinitialise(){
 }
 
 
-int main()
+int main(int argc, char * argv[])
 {
 
     FILE *fichier = NULL;
-    fichier = fopen("fichier.txt", "r+"); // r+ pour lire et écrire !
-    fopen("jambom.txt","r+");
+    FILE *resultFile = NULL;
+    // argv[1] prend la valeur du premier paramètrer
+    fichier = fopen(argv[1], "r+"); // r+ pour lire et écrire !
+    resultFile = fopen("resultats.txt","r+");
+    resultFile = fopen("resultats.txt","wb");
 
     // tableau minimal de noms de noeuds (on pourra aller jusqu'à 31 lettres différentes, là il y en a 5...)
     char *nomNoeud[] = {"Ø", "A", "B", "AB", "C", "AC", "BC", "ABC", "D", "AD", "BD", "ABD", "CD", "ACD", "BCD", "ABCD", "E", "AE", "BE", "ABE", "CE", "ACE", "BCE", "ABCE", "DE", "ADE", "BDE", "ABDE", "CDE", "ACDE", "BCDE", "ABCDE"};
@@ -52,7 +55,7 @@ int main()
 
     // on s'assure d'être à la fin de l'énoncé dans le fichier.txt
     fseek(fichier, 0, SEEK_END);
-    fprintf(fichier, "\nListe des règles RS1 à RS8 appliquées avec succès :\n\n");
+    fprintf(resultFile, "\nListe des règles RS1 à RS8 appliquées avec succès :\n\n");
     printf("\nListe des règles RS1 à RS8 appliquées avec succès :\n\n");
 
     // APPLICATION DES REGLES RS1 à RS8
@@ -71,7 +74,7 @@ int main()
             {
                 rkMin[y] = rkMin[x];
                 printf("Test %d : RS1 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
-                fprintf(fichier, "Test %d : RS1 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
+                fprintf(resultFile, "Test %d : RS1 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
                 reinitialise();
             }
             // fin (RS1)
@@ -82,7 +85,7 @@ int main()
             {
                 rkMax[x] = rkMax[y];
                 printf("Test %d : RS3 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMax[x], nomNoeud[x], rkMax[x], rkMin[x]);
-                fprintf(fichier, "Test %d : RS3 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMax[x], nomNoeud[x], rkMax[x], rkMin[x]);
+                fprintf(resultFile, "Test %d : RS3 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMax[x], nomNoeud[x], rkMax[x], rkMin[x]);
                 reinitialise();
             }
             // fin (RS3)
@@ -93,7 +96,7 @@ int main()
             {
                 rkMin[x] = rkMin[y];
                 printf("Test %d : RS2 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
-                fprintf(fichier, "Test %d : RS2 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
+                fprintf(resultFile, "Test %d : RS2 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
                 reinitialise();
 
             }
@@ -105,7 +108,7 @@ int main()
             {
                 rkMax[y] = rkMax[x];
                 printf("Test %d : RS4 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMax[y], nomNoeud[y], rkMax[y], rkMin[y]);
-                fprintf(fichier, "Test %d : RS4 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMax[y], nomNoeud[y], rkMax[y], rkMin[y]);
+                fprintf(resultFile, "Test %d : RS4 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMax[y], nomNoeud[y], rkMax[y], rkMin[y]);
                 reinitialise();
             }
             // fin (RS4)
@@ -117,7 +120,7 @@ int main()
             {
                 rkMax[interPratique(x,y)] = rkMax[x] + rkMax[y] - rkMin[unionPratique(x,y)];
                 printf("Test %d : RS5 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[interPratique(x,y)], rkMax[interPratique(x,y)], nomNoeud[interPratique(x,y)], rkMax[x |y], rkMin[interPratique(x,y)]);
-                fprintf(fichier, "Test %d : RS5 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[interPratique(x,y)], rkMax[interPratique(x,y)], nomNoeud[interPratique(x,y)], rkMax[x |y], rkMin[interPratique(x,y)]);
+                fprintf(resultFile, "Test %d : RS5 de %s sur %s  ->  rkMax(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[interPratique(x,y)], rkMax[interPratique(x,y)], nomNoeud[interPratique(x,y)], rkMax[x |y], rkMin[interPratique(x,y)]);
                 reinitialise();
             }
             // fin (RS5)
@@ -129,7 +132,7 @@ int main()
             {
                 rkMax[unionPratique(x,y)] = rkMax[x] + rkMax[y] - rkMin[interPratique(x,y)];
                 printf("Test %d : RS6 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[unionPratique(x,y)], rkMax[unionPratique(x,y)], nomNoeud[unionPratique(x,y)], rkMax[unionPratique(x,y)], rkMin[unionPratique(x,y)]);
-                fprintf(fichier, "Test %d : RS6 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[unionPratique(x,y)], rkMax[unionPratique(x,y)], nomNoeud[unionPratique(x,y)], rkMax[unionPratique(x,y)], rkMin[unionPratique(x,y)]);
+                fprintf(resultFile, "Test %d : RS6 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[unionPratique(x,y)], rkMax[unionPratique(x,y)], nomNoeud[unionPratique(x,y)], rkMax[unionPratique(x,y)], rkMin[unionPratique(x,y)]);
                 reinitialise();
             }
             // fin (RS6)
@@ -141,7 +144,7 @@ int main()
             {
                 rkMin[x] = rkMin[unionPratique(x,y)] + rkMin[interPratique(x,y)] - rkMax[y];
                 printf("Test %d : RS7 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
-                fprintf(fichier, "Test %d : RS7 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
+                fprintf(resultFile, "Test %d : RS7 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[x], rkMin[x], nomNoeud[x], rkMax[x], rkMin[x]);
                 reinitialise();
 
             }
@@ -154,7 +157,7 @@ int main()
             {
                 rkMin[y] = rkMin[unionPratique(x,y)] + rkMin[interPratique(x,y)] - rkMax[x];
                           printf("Test %d : RS8 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
-                fprintf(fichier, "Test %d : RS8 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
+                fprintf(resultFile, "Test %d : RS8 de %s sur %s  ->  rkMin(%s) = %d  ->  %s %d/%d\n", numTest, nomNoeud[x], nomNoeud[y], nomNoeud[y], rkMin[y], nomNoeud[y], rkMax[y], rkMin[y]);
                 reinitialise();
             }
             printf("%d - ",x);
@@ -169,7 +172,7 @@ int main()
         x++;
     }
     printf("\nNombre total de tests effectués : %d\n", numTest);
-    fprintf(fichier, "\nNombre total de tests effectués : %d\n", numTest);
+    fprintf(resultFile, "\nNombre total de tests effectués : %d\n", numTest);
 }
 
 
