@@ -1,10 +1,9 @@
-(* Exemple de lemme à 4 points p. 114 *)
-* Description du problème *
+// Exemple de lemme à 4 points p. 114
+// Description du problème
 // Suite description
-Points : A B C' D
-H : ABD 3/3
-H : AC'D 2/2
-Commentaire quelconque...
-H : AC' 2/2
-H : C'D 2/2
-Résultat : ABC' 3/3
+Points A B C' D
+Hypo ABD 3/3
+Hypo AC'D 2/2
+Hypo AC' 2/2
+Hypo C'D 2/2
+Résultat ABC' 3/3
