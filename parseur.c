@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define TAILLE_MAX 100
+#define TAILLE_MAX 500
 //#define xstr(s) str(s) // https://xrenault.developpez.com/tutoriels/c/scanf/#Lno-5-3
 //#define str(s) #s
 
@@ -24,14 +24,17 @@ int main()
 
     // tableau pour stocker chaque ligne de l'énoncé écrite sur le fichier (taille arbitraire de 32 lignes, parce que pourquoi pas ?)
     char *ligneFichier[32] = {"Ø"};
+    // char *ligneFichier[0] = {"Ø"};
 
     // tableau minimal de 32 noms de noeuds (formés avec seulement 5 éléments différents, on prévoit d'aller jusqu'à 32...)
-    char *nomNoeud[] = {"Ø", "A", "B", "AB", "C", "AC", "BC", "ABC", "D", "AD", "BD", "ABD", "CD", "ACD", "BCD", "ABCD", "E", "AE", "BE", "ABE", "CE", "ACE", "BCE", "ABCE", "DE", "ADE", "BDE", "ABDE", "CDE", "ACDE", "BCDE", "ABCDE"};
-    // {"Ø", "P", "Q", "PQ", "R", "PR", "QR", "PQR", "S", "PS", "QS", "PQS", "RS", "PRS", "QRS", "PQRS", "T", "PT", "QT", "PQT", "RT", "PRT", "QRT", "PQRT", "ST", "PST", "QST", "PQST", "RST", "PRST", "QRST", "PQRST"};
+    // char *nomNoeud[32] = {"Ø"};
+    char *nomNoeud[32] = {"Ø"};
+    // "Ø", "A", "B", "AB", "C", "AC", "BC", "ABC", "D", "AD", "BD", "ABD", "CD", "ACD", "BCD", "ABCD", "E", "AE", "BE", "ABE", "CE", "ACE", "BCE", "ABCE", "DE", "ADE", "BDE", "ABDE", "CDE", "ACDE", "BCDE", "ABCDE"};
 
     // tableaux rkMax[] et rkMin[] par défaut générés avec rankTabGen.c
     unsigned char rkMax[32] = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 4};
     unsigned char rkMin[32] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+
     // variables nécessaires à la mise à jour des rangs dans le tableau en fonction des contraintes (hypothèses) de l'énoncé
     int rkM = 0;
     int rkm = 0;
@@ -46,9 +49,13 @@ int main()
 
     while (fgets(buffer, TAILLE_MAX, fichier) != NULL)
     {
-        printf("%s", buffer); // affichage de la ligne d'énoncé parsée
+        // allocation dynamique de la taille du tableau *ligneFichier[] en fonction du nombre de lignes trouvées
+        // *ligneFichier = malloc(idLigne + 1);
+
         ligneFichier[idLigne] = malloc(strlen(buffer) + 1);
         strcpy(ligneFichier[idLigne], buffer);
+
+        printf("%s", ligneFichier[idLigne]); // affichage de la ligne d'énoncé parsée
         idLigne++;
     }
     printf("\n");
@@ -61,23 +68,28 @@ int main()
     // PARSAGE DES LIGNES PAR MOTS CLES
 
     // Définition des mots clés
-    const char *motClePoints = "Points :";
-    const char *motCleHypotheses = "H :";
-    const char *motCleResultat = "Résultat :";
+    const char *motClePoints = "Points";
+    const char *motCleHypotheses = "Hypo";
+    const char *motCleResultat = "Résultat";
+
+    // cardinal de l'ensemble de points de l'énoncé
+    int cardinalE = 0;
+    // taille du tableau nomNoeud
+    int tailleNomNoeud = 1;
 
     // Parcour du tableau *ligneFichier[]
     for (int i = 0; i < nbLignes; i++)
     {
         // Recherche de la ligne des points
-        int resPoints = strncmp(ligneFichier[i], motClePoints, strlen(motClePoints));
-        if (resPoints == 0)
+        int resutatTestPoints = strncmp(ligneFichier[i], motClePoints, strlen(motClePoints));
+        if (resutatTestPoints == 0)
         {
             //printf("\"%s\" trouvé à la ligne %d\n", motClePoints, i + 1);
 
             // PARSAGE DE LA LIGNE DES POINTS AVEC strtok (on rempli nomNoeud[])
 
             // Définitions de séparateurs possibles.
-            const char *separators = " ,.:-!\n";
+            const char *separators = " \n"; // " ,.:-!\n"
 
             char *strToken = strtok(ligneFichier[i], separators);
 
@@ -88,14 +100,18 @@ int main()
             int pow2idTabNoeud = 0;
             // index où sera inscrit le nom du noeud dans le tableau
             int idTabNoeud = 0;
-            // cardinal de l'ensemble de points de l'énoncé
-            int cardinalE = 0;
 
             // pour calculer la taille mémoire nécessaire à chaque nom de sous-ensemble
             size_t noeudSize;
 
             while (strToken != NULL)
             {
+                // incrémentation du cardinal pour chaque élément (point) trouvé
+                cardinalE++;
+                // allocation dynamique de la taille du tableau de pointeurs nomNoeud
+                // tailleNomNoeud = (int)pow(2, (double)cardinalE); //------------------------------------------------(POW A SUPPRIMER !!!)
+                // *nomNoeud = malloc(tailleNomNoeud);
+
                 // REMPLISSAGE *nomNoeud[] avec chaque point de E définit dans l'énoncé
 
                 // chaque point de E est à enregistrer à un index == à une puissande de 2; ------------------------(POW A SUPPRIMER !!!)
@@ -104,23 +120,29 @@ int main()
                 nomNoeud[idTabNoeud] = malloc(strlen(strToken) + 1);
                 // copie de la valeur parsée dans la case voulue
                 strcpy(nomNoeud[idTabNoeud], strToken);
-                // incrémentation du cardinal pour chaque élément (point) trouvé
-                cardinalE++;
                 // pour passer à la case "suivante"
                 pow2idTabNoeud++;
                 // token suivant
                 strToken = strtok(NULL, separators);
 
-                // dans la foulée... DEFINITON ET ENREGISTREMENT DES SOUS ENSEMBLES
+                // DEFINITON ET ENREGISTREMENT DES SOUS ENSEMBLES
+                // (concaténation du nom du nouveau noeud avec le nom de chacun des sous ensembles précédents, inscrits dans les cases suivant le nouveau point du tableau)
+                // !!! ON ARRIVE A 2 PUISSANCE (NB DE POINTS) CASES DE TABLEAU => TAILLE DU TABLEAU A ALLOUER !!!
 
                 // à partir du deuxième point (id == 2)
                 if (idTabNoeud > 1)
                 {
+                    // pour chaque noeud précédent, concaténation avec le nom du nouveau point
                     for (int j = 1; j < idTabNoeud; j++)
                     {
+                        // taille du nom du sous ensemble nomNoeud[j] + nomNoeud[idTabNoeud]
+                        // (nomNoeud[idTabNoeud] = nom du dernier noeud créé avec le dernier point trouvé et incrit dans la case d'id = idTabNoeud)
                         noeudSize = strlen(nomNoeud[j]) + strlen(nomNoeud[idTabNoeud]) + 1;
+                        // allocation de la mémoire de la case idTabNoeud + j
                         nomNoeud[idTabNoeud + j] = malloc(noeudSize);
+                        // copie du nom nomNoeud[j] dans la case nomNoeud[idTabNoeud + j]
                         strcpy(nomNoeud[idTabNoeud + j], nomNoeud[j]);
+                        // concaténation avec nomNoeud[idTabNoeud]
                         strcat(nomNoeud[idTabNoeud + j], nomNoeud[idTabNoeud]);
                     }
                 }
@@ -143,13 +165,13 @@ int main()
         }
 
         // CONTRAINTES SUR LES SOUS-ENSEMBLES : recherche d'une ligne d'hypothèse
-        int resHypotheses = strncmp(ligneFichier[i], motCleHypotheses, strlen(motCleHypotheses));
-        if (resHypotheses == 0)
+        int resultatTestHypotheses = strncmp(ligneFichier[i], motCleHypotheses, strlen(motCleHypotheses));
+        if (resultatTestHypotheses == 0)
         {
             //printf("\"%s\" trouvé à la ligne %d\n", motCleHypotheses, i + 1);
 
-            //(void)sscanf(ligneFichier[i], "H : %s %d/%d", noeud, &rkM, &rkm);
-            (void)sscanf(ligneFichier[i], "%*s%*s %s %d/%d", noeud, &rkM, &rkm); // ---------------------------------A FAIRE : ECHAPPEMENT DU MOT CLE !!!
+            //(void)sscanf(ligneFichier[i], "Hypo : %s %d/%d", noeud, &rkM, &rkm);
+            (void)sscanf(ligneFichier[i], "%*s %s %d/%d", noeud, &rkM, &rkm); // ---------------------------------A FAIRE : ECHAPPEMENT DU MOT CLE !!!
             // printf("%s %d/%d\n", noeud, rkM, rkm);
 
             int j = 1;
@@ -168,6 +190,15 @@ int main()
         {
             //printf("\n\"%s\" trouvé à la ligne %d de l'énoncé.\n", motCleResultat, i + 1);
         }
+    }
+    printf("\n");
+
+    // affichage nomNoeud
+    size_t tailleMesureeNomNoeud = sizeof(*nomNoeud);
+    printf("taille nomNoeud : %zu (%d)\n", tailleMesureeNomNoeud, tailleNomNoeud);
+    for (int i = 1; i < (int)pow(2, (double)cardinalE); i++){
+    // for (int i = 1; i < 32; i++){
+        printf("%s, ", nomNoeud[i]);
     }
     printf("\n");
 
