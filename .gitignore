@@ -1,5 +1,7 @@
 # System files
 .DS_Store
+*.idea/
+*.vscode
 
 # Prerequisites
 *.d
