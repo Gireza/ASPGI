@@ -17,8 +17,15 @@ int interPratique(int x,int y){
 int puissance(int puiss){
     return 1 << puiss;
 }
+int logarithme(int x){
+    int n = 0;
+    while (puissance(n)<x){
+        n++;
+    }
+    return n;
+}
 int appartienPratique(int tenir, int appartient){
-    return unionPratique(x,y)==x;
+    return unionPratique(tenir,appartient)==tenir;
 }
 int RS1Pratique(int x, int y, int rkMinx, int rkMiny, bool continueSat){
     return appartienPratique(x,y) && rkMinx > rkMiny && continueSat;
