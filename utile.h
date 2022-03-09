@@ -7,6 +7,7 @@
 int unionPratique(int x,int y);
 int interPratique(int x,int y);
 int puissance(int puiss);
+int logarithme(int x);
 int appartienPratique(int tenir, int appartien);
 int RS1Pratique(int x, int y, int rkMinx, int rkMiny, bool continueSat);
 int RS2Pratique(int x, int y, int rkMiny, int rkMinx, bool continueSat);
