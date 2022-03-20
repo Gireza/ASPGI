@@ -2,7 +2,6 @@
 #include<stdio.h>
 
 #include<ensemble.h>
-#include<saturation.h>
 #include<parseur.h>
 
 int main(void){
@@ -14,12 +13,10 @@ int main(void){
     mavar1 = puissance(mavar1);
     printf("après puissance, ma variable vaut : %d\n", mavar1);
     
-    int mavar2, mavar3;
+    int mavar2;
 
     mavar2 = modifier(mavar1);
 
     printf("le logarithme de mavar est : %d\n", mavar2);
-
-    mavar3 = devaluer(mavar2);
-
+    
 }
