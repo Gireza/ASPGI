@@ -3,7 +3,8 @@
 #include <math.h>
 #include <string.h>
 #include <stdbool.h>
-#include "utile.c"
+
+#include <ensemble.h>
 int y;
 int x;
 bool continueSat;
@@ -174,9 +175,3 @@ int main(int argc, char * argv[])
     printf("\nNombre total de tests effectués : %d\n", numTest);
     fprintf(resultFile, "\nNombre total de tests effectués : %d\n", numTest);
 }
-
-
-
-
-
-// mettre dans une variable le printf et le mettre dans le fichier 
