@@ -15,18 +15,18 @@ ALLFLAGS=$(WFLAGS) $(foreach D,$(INCDIRS),-I$(D)) $(DEPFLAGS)
 
 
 ENS=lib/ensemble.o
+
 LIBS=lib/*.c
 CACIEN=Ancien/*.c
-OACIEN=$(CACIEN:.c=.o)
 
 MAINS=*.c
-EVERYC=$(LIBS) $(MAINS)
+EVERYC=$(LIBS) $(MAINS) $(CACIEN)
 
 #Dit que les fichiers sources sont tous les .c dans . et ./include/
 
 #Les fichier objets pour faire les executables, 2 manières
 OBJECTS=$(LIBS:.c=.o)
-TOBJECTS=$(OBJECTS) $(OACIEN) $()
+TOBJECTS=$(EVERYC:.c=.o)
 #1ère avec ces listes là honnêtement, pas utile d'aller plus loin, mais on peut aussi faire
 #OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 
@@ -51,9 +51,15 @@ testSaturation: testSaturation.o lib/saturation.o $(ENS)
 testParseur: testParseur.o lib/parseur.o $(ENS)
 	$(CC) -o $@ $^
 
+ancienParseur:Ancien/ancienParseur.o $(ENS)
+	$(CC) -o $@ $^
+
+ancienSaturation:Ancien/ancienParseur.o $(ENS)
+	$(CC) -o $@ $^
+
 #Il y a du regex en makefile les wildcard : % , le $@ signifie ce qu'on veut créer pour pas se repeter et le $< c'est pour ajouter tout ce dont le .o dépend, donc le .c et les .h
 %.o: %.c
 	$(CC) $(ALLFLAGS) -c -o $@ $<
 
 clean:
-	rm -rf $(EXECUTABLE) *.o $(OBJECTS) $(DEPFILES)
+	rm -rf $(EXECUTABLE) $(TOBJECTS) $(DEPFILES)
