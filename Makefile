@@ -36,7 +36,7 @@ DEPFILES=$(EVERYC:.c=.d)
 #HEADERS=$(SOURCES:.c=.h)
 
 #Les différents executables dans le futur n'aura que main
-EXECUTABLES=pgi testSaturation testParseur
+EXECUTABLES=pgi testSaturation testParseur ancienParseur ancienSaturation
 #testMultiplication testSoustraction
 
 #Si je veux tout build, il me faut tout ces fichiers, on la met en 1er parce que 'make' tout court prend la 1ère instruction
@@ -62,4 +62,4 @@ ancienSaturation:Ancien/ancienParseur.o $(ENS)
 	$(CC) $(ALLFLAGS) -c -o $@ $<
 
 clean:
-	rm -rf $(EXECUTABLE) $(TOBJECTS) $(DEPFILES)
+	rm -rf $(EXECUTABLES) $(TOBJECTS) $(DEPFILES)

@@ -21,3 +21,24 @@ int logarithme(int x){
 int appartienPratique(int tenir, int appartient){
     return unionPratique(tenir,appartient)==tenir;
 }
+
+// prend l'indice de l'ensemble dans le tableau dont on veux connaitre le cardinal
+// et renvoie ce cardinal
+int cardinal(int indiceEnsemble){
+    int nombre = indiceEnsemble;
+    int nbBits = logarithme(nombre) + 1;
+    int nombreDeUn = 0;
+    // parcour des bits de nbBits
+    for (int bit = 1 ; bit <= nbBits ; bit++) {
+
+        // si le premier bit est égale à 1, on incrémente nbUns
+        if (nombre%2 == 1) {
+            nombreDeUn++;
+        }
+
+        // on change le bit considéré par décalage à droite bit à bit (opérateur bitwise)
+        nombre = nombre >> 1;
+    }
+
+    return nombreDeUn;
+}

@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -10,6 +9,11 @@
 #define TAILLE_MAX 500
 //#define xstr(s) str(s) // https://xrenault.developpez.com/tutoriels/c/scanf/#Lno-5-3
 //#define str(s) #s
+
+int genererTableRang(int cardinalEnsemble){
+    return 1;
+}
+
 
 int main()
 {
