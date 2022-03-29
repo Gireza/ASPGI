@@ -37,6 +37,12 @@
 *.dylib
 
 # Executables
+pgi
+testSaturation
+testParseur
+ancienParseur
+ancienSaturation
+
 *.exe
 *.out
 *.app

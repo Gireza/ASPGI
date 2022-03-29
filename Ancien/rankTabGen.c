@@ -10,7 +10,7 @@ int main()
     unsigned char rkMin[32] = {0};
     unsigned char rkMax[32] = {0};
     // remarque : rkMin[0] et rkMax[0] resterons initialisés à 0
-
+    
     int i = 1;
     int j = 1;
 
