@@ -54,7 +54,7 @@ testParseur: testParseur.o lib/parseur.o $(ENS)
 ancienParseur:Ancien/ancienParseur.o $(ENS)
 	$(CC) -o $@ $^
 
-ancienSaturation:Ancien/ancienParseur.o $(ENS)
+ancienSaturation:Ancien/ancienSaturation.o $(ENS)
 	$(CC) -o $@ $^
 
 #Il y a du regex en makefile les wildcard : % , le $@ signifie ce qu'on veut créer pour pas se repeter et le $< c'est pour ajouter tout ce dont le .o dépend, donc le .c et les .h
