@@ -3,7 +3,6 @@
 #ifndef SATURATION_H
 #define SATURATION_H
 
-int enlever(int x, int y);
-int devaluer(int base);
+void saturer(int** rkMin, int** rkMax, int n_points);
 
 #endif //SATURATION_H
