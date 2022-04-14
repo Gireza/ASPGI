@@ -1,6 +1,0 @@
-(* collinearity p. 137 *)
-A B C D
-BC 2/2
-ABC 2/2
-BCD 2/2
-*ABCD 2/2

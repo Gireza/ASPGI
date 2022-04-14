@@ -1,7 +1,0 @@
-(* line_unification p.135 *)
-A B C
-AB 2/2
-AC 2/2
-BC 2/2
-*ABC 2/2
-

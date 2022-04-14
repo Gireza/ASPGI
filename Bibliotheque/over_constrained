@@ -1,6 +1,0 @@
-(* over_constrained p. 138 *)
-A B C D
-ABC 3/3
-BCD 3/3
-ABCD 4/4
-*BC 2/2
