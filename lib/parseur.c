@@ -6,13 +6,10 @@
 #include <ensemble.h>
 #include <parseur.h>
 
-int ajouter(int x, int y){
-    return x + y;
-}
-int modifier(int base){
-    return logarithme(base);
-}
 
+int parse(FILE * file, int** rkMin, int** rkMax, int* n_points){
+    return 0;
+}
 /*
 void parseur(int * rkMin, int * rkMax){
 
