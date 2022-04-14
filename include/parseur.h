@@ -1,8 +1,9 @@
 //Header de parseur
 #ifndef PARSEUR_H
 #define PARSEUR_H
+include <stdio.h>
 
-int ajouter(int x, int y);
-int modifier(int base);
+int parse(FILE * file, int** rkMin, int** rkMax, int* n_points);
+
 
 #endif //PARSEUR_H
