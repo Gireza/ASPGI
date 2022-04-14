@@ -40,5 +40,9 @@ int cardinal(int indiceEnsemble){
         nombre = nombre >> 1;
     }
 
+    if (nombreDeUn > 4) {
+        nombreDeUn = 4;
+    }
+
     return nombreDeUn;
 }
