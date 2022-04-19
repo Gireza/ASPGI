@@ -40,6 +40,11 @@ unsigned int cardinal(ENSEMBLE x) {
     // on change le bit considéré par décalage à droite bit à bit (opérateur bitwise)
     x = x >> 1;
   }
+  
+  // si nombreDeUn est supérieur à 4, on lui donne la valeur 4 (on travail avec le rang 4 au maximum)
+  if (nombreDeUn > 4){
+    nombreDeUn = 4;
+  }
 
   return nombreDeUn;
 }
