@@ -19,7 +19,7 @@ int calculeNombreLignes(FILE * file, char *buffer){
 /*
 Récupère les lignes du fichier dans un tableau de string
 */
-int recupererTableauLignes(FILE * file, char **tableauLigne, char *buffer){
+int recupererTableauLignes(FILE * file, char **tableauLignes, char *buffer){
   
   int indiceLigne = 0;
 
@@ -28,8 +28,8 @@ int recupererTableauLignes(FILE * file, char **tableauLigne, char *buffer){
   // parcours du fichier jusqu'à la dernière ligne
   while (fgets(buffer, 500, file) != NULL){
 
-    tableauLigne[indiceLigne] = (char *)malloc(strlen(buffer) + 1); // casting des lignes du tableau en char, allouer l'espace pour copier buffer
-    strcpy(tableauLigne[indiceLigne], buffer); // copie des lignes dans le tableau
+    tableauLignes[indiceLigne] = (char *)malloc(strlen(buffer) + 1); // casting des lignes du tableau en char, allouer l'espace pour copier buffer
+    strcpy(tableauLignes[indiceLigne], buffer); // copie des lignes dans le tableau
 
     indiceLigne++;
   }
@@ -37,68 +37,90 @@ int recupererTableauLignes(FILE * file, char **tableauLigne, char *buffer){
   return 0;
 }
 
-
 /*
-void recupererLigne(char * motCle, char ** tableauLignes, char *ligneRecupere, int nombreLignes){
+Récupère la ligne dans le tableau de lignes grace au mot clé et à son occurence (commence à 0)
+*/
+int occurenceMotCle(char * motCle, char ** tableauLignes, int nombreLignes){
+  
+  int nombreOccurence = 0; // initialisation d'occurence
 
-  for (int i = 0; i < nombreLignes; i++){
-    int resultatTestLigne = strncmp(tableauLignes[i], motCle, strlen(motCle));
-    if (resultatTestLigne == 0){
-      *ligneRecupere = (char *)malloc(strlen(tableauLignes[i]) + 1);
-      strcpy(ligneRecupere, )
+  // parcours du tableau des nombres de lignes
+  for (int i = 0; i < nombreLignes; i++){ 
+
+    int resultatTestLigne = strncmp(tableauLignes[i], motCle, strlen(motCle)); // 
+
+    if (resultatTestLigne == 0){ // si la comparaison ne trouve aucune différence
+
+      // incrémentation du nombre d'occurence
+      nombreOccurence++;
     }
   }
+
+  return nombreOccurence;
+}
+
+
+/*
+Récupère la ligne dans le tableau de lignes grace au mot clé et à son occurence (commence à 0)
+*/
+int recupererLigne(char * motCle, char ** tableauLignes, char **ligneARecupere, int nombreLignes, int occurence){
+  
+  int nombreOccurence = 1; // nombre d'occurence actuelle
+
+  // parcours du tableau des nombres de lignes
+  for (int i = 0; i < nombreLignes; i++){ 
+
+    int resultatTestLigne = strncmp(tableauLignes[i], motCle, strlen(motCle)); // 
+
+    if (resultatTestLigne == 0){ // si la comparaison ne trouve aucune différence
+      
+      // si c'est l'occurence que l'on veut 
+      if (nombreOccurence == occurence){ 
+        
+        *ligneARecupere = (char *)malloc(strlen(tableauLignes[i]) + 1);
+        strcpy(*ligneARecupere, tableauLignes[i]);
+
+        return 0;
+      }
+
+      nombreOccurence++;
+    }
+  }
+
+  return -1;
   
 }
-
-
-char* clonerLigne(char * ligne){
-
-}
-*/
-
 
 /***
   *Determine le cardinal de l'ensemble des points 
   */
 unsigned int determinerCardinal(char **tableauLignes, char *separateurs, int nombreLignes){
   
-  unsigned int cardinaleEnsemble = 0; 
+  unsigned int cardinalEnsemble = 0; 
 
   char *ligneDesPoints; // variable nécessaire à la restauration des points 
+  char *motClePoints = "Points";
+  
+  if (recupererLigne(motClePoints, tableauLignes, &ligneDesPoints, nombreLignes, 1) == -1) return 0;
 
-  const char *motClePoints = "Points";
+  char *strToken = strtok(ligneDesPoints, separateurs);
 
-  for (int i = 0; i < nombreLignes; i++) {
-    // Recherche de la ligne des points
-    int resutatTestPoints = strncmp(tableauLignes[i], motClePoints, strlen(motClePoints));
-    if (resutatTestPoints == 0)
-    {
-      // SAUVEGARDE DE LA LIGNE DES POINTS
-      ligneDesPoints = (char *)malloc(strlen(tableauLignes[i]) +1);
-      strcpy(ligneDesPoints, tableauLignes[i]);
-      
-      // PARSAGE DE LA LIGNE DES POINTS AVEC strtok
+  // !!! ON PASSE TOUT DE SUITE AU DEUXIEME token POUR IGNORER LE MOT CLE !!!
+  strToken = strtok(NULL, separateurs);
 
-      char *strToken = strtok(ligneDesPoints, separateurs);
+  while (strToken != NULL){
 
-      // !!! ON PASSE TOUT DE SUITE AU DEUXIEME token POUR IGNORER LE MOT CLE !!!
-      strToken = strtok(NULL, separateurs);
-
-      while (strToken != NULL){
-        // affichage strToken courant
-        //printf("%s\n", strToken);
-
-        // incrémentation du cardinal pour chaque élément (point) trouvé
-        cardinaleEnsemble++;
-        // token suivant
-        strToken = strtok(NULL, separateurs);
-      }
-    }
+    // incrémentation du cardinal pour chaque élément (point) trouvé
+    cardinalEnsemble++;
+    // token suivant
+    strToken = strtok(NULL, separateurs);
   }
 
-  return cardinaleEnsemble;
+  return cardinalEnsemble;
 }
+
+//void genererTabRgMax()
+
 
 int parse(FILE * file, unsigned int** rkMin, unsigned int** rkMax, unsigned int* n_points){
 
@@ -126,14 +148,17 @@ int parse(FILE * file, unsigned int** rkMin, unsigned int** rkMax, unsigned int*
 
   // récupération du nombre de points = cardinal de l'ensemble
 
-  unsigned int cardinalEnsemble = 0; // initlialisation 
+  unsigned int cardinalEnsemble; // initlialisation 
 
   char *separateurs = " \n";
 
   cardinalEnsemble = determinerCardinal(tableauLignes, separateurs, nbLignes);
 
-  printf("cardinal de l'ensemble : %d", cardinalEnsemble);
+  //printf("cardinal de l'ensemble : %d\n", cardinalEnsemble);
 
+
+  // retour des résultats :
+  *n_points = cardinalEnsemble;
 
   return 0;
 }

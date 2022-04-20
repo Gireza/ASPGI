@@ -25,8 +25,13 @@ int main(int argc, char** argv){
   // utilisation de parse
   if (parse(file, &pointeur_rkMax, &pointeur_rkMin, &n_points) == -1) { printf("Erreur de parsage du fichier"); }
 
+  // Fermeture du fichier
   fclose(file);
-  //printf("n_points = %d\n", n_points);
+
+
+  printf("nombre de points de l'ensemble : %d\n", n_points);
+  // DEBUT DE LA SATURATION
+
 
   return 0;
 
