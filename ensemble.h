@@ -5,6 +5,8 @@
 
 typedef unsigned int ENSEMBLE;
 
+unsigned int puissance2(unsigned int n);
+
 ENSEMBLE unionEnsembles(ENSEMBLE x, ENSEMBLE y);
 
 ENSEMBLE intersectionEnsembles(ENSEMBLE x, ENSEMBLE y);
