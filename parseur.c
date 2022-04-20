@@ -119,30 +119,26 @@ unsigned int determinerCardinal(char **tableauLignes, char *separateurs, int nom
   return cardinalEnsemble;
 }
 
-void genererTabRgMax(int cardinalEnsemble){
+int remplirRkMax(int cardinalEnsemble, unsigned int **rkMax){
+  
   unsigned int tailleTableau = puissance2(cardinalEnsemble);
   
-  unsigned int tabRgMax[tailleTableau];
+  // allocation de la mémoire
+  *rkMax = (unsigned int *)malloc((tailleTableau * sizeof(unsigned int))); 
 
-  tabRgMax[0] = 0;
-
-  for (unsigned int j = 1; j < tailleTableau; j++){
-    tabRgMax[j] = cardinal(j);
+  // remplissage du tableau max 
+  for (unsigned int j = 0; j < tailleTableau; j++){
+    (*rkMax)[j] = cardinal(j);
   }
 
+  return 0;
 }
 
 
-int parse(FILE * file, unsigned int** rkMin, unsigned int** rkMax, unsigned int* n_points){
+int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int* n_points){
 
   if (file == NULL) { return -1; }
   
-  // TODO
-  *rkMin = NULL;
-  *rkMax = NULL;
-  *n_points = 0;
-  
-
   // création d'un buffer
   char buffer[501] = "0";
 
@@ -164,11 +160,9 @@ int parse(FILE * file, unsigned int** rkMin, unsigned int** rkMax, unsigned int*
   char *separateurs = " \n";
 
   cardinalEnsemble = determinerCardinal(tableauLignes, separateurs, nbLignes);
-
-  //printf("cardinal de l'ensemble : %d\n", cardinalEnsemble);
   
-  // generation de tabRgMax
-  //unsigned int *tabRgMax = genererTabRgMax(cardinalEnsemble);
+  // complétion des tableau de rang
+  remplirRkMax(cardinalEnsemble, rkMax);
 
   // retour des résultats :
   *n_points = cardinalEnsemble;

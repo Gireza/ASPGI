@@ -13,22 +13,22 @@ int main(int argc, char** argv){
   file = fopen("problemes/fichier.txt", "r+"); // ouverture du fichier en lecture
 
   // initialisation des tableaux de rang (tableaux d'ints non signés) 
-  unsigned int rkMax[1] = {0}; 
-  unsigned int rkMin[1] = {0};
-  // initialisation des pointeurs vers les adresses des tableaux 
-  unsigned int *pointeur_rkMax = *&rkMax;
-  unsigned int *pointeur_rkMin = *&rkMin;
+  unsigned int *rkMax; 
+  unsigned int *rkMin;
 
   // initialisation du nombre de point
   unsigned int n_points;
   
   // utilisation de parse
-  if (parse(file, &pointeur_rkMax, &pointeur_rkMin, &n_points) == -1) { printf("Erreur de parsage du fichier"); }
+  if (parse(file, &rkMin, &rkMax, &n_points) == -1) { printf("Erreur de parsage du fichier"); }
 
   // Fermeture du fichier
   fclose(file);
 
   //printf("nombre de points de l'ensemble : %d\n", n_points);
+  for (unsigned int i = 0; i < 16; i ++){
+    printf("élément %d de rkMax : %d\n", i, rkMax[i]);
+  }
 
   
   // DEBUT DE LA SATURATION
