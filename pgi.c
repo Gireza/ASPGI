@@ -28,8 +28,9 @@ int main(int argc, char** argv){
   // Fermeture du fichier
   fclose(file);
 
+  //printf("nombre de points de l'ensemble : %d\n", n_points);
 
-  printf("nombre de points de l'ensemble : %d\n", n_points);
+  
   // DEBUT DE LA SATURATION
 
 

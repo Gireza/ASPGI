@@ -1,5 +1,5 @@
 #include "parseur.h"
-
+#include "ensemble.h"
 
 /* 
 determine le nombre de lignes du fichier 
@@ -119,7 +119,18 @@ unsigned int determinerCardinal(char **tableauLignes, char *separateurs, int nom
   return cardinalEnsemble;
 }
 
-//void genererTabRgMax()
+void genererTabRgMax(int cardinalEnsemble){
+  unsigned int tailleTableau = puissance2(cardinalEnsemble);
+  
+  unsigned int tabRgMax[tailleTableau];
+
+  tabRgMax[0] = 0;
+
+  for (unsigned int j = 1; j < tailleTableau; j++){
+    tabRgMax[j] = cardinal(j);
+  }
+
+}
 
 
 int parse(FILE * file, unsigned int** rkMin, unsigned int** rkMax, unsigned int* n_points){
@@ -155,7 +166,9 @@ int parse(FILE * file, unsigned int** rkMin, unsigned int** rkMax, unsigned int*
   cardinalEnsemble = determinerCardinal(tableauLignes, separateurs, nbLignes);
 
   //printf("cardinal de l'ensemble : %d\n", cardinalEnsemble);
-
+  
+  // generation de tabRgMax
+  //unsigned int *tabRgMax = genererTabRgMax(cardinalEnsemble);
 
   // retour des résultats :
   *n_points = cardinalEnsemble;

@@ -13,6 +13,6 @@ ENSEMBLE intersectionEnsembles(ENSEMBLE x, ENSEMBLE y);
 
 bool estSousEnsemble(ENSEMBLE x, ENSEMBLE y);
 
-unsigned int cardinalEnsemble(ENSEMBLE x);
+unsigned int cardinal(ENSEMBLE x);
 
 #endif
