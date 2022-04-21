@@ -86,7 +86,7 @@ int recupererLigne(char * motCle, char ** tableauLignes, char **ligneARecupere, 
       nombreOccurence++;
     }
   }
-
+  printf("test");
   return -1;
   
 }
