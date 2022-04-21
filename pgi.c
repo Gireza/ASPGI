@@ -2,7 +2,6 @@
 #include "saturation.h"
 #include "ensemble.h"
 
-
 #include <stdio.h>
 
 int main(int argc, char** argv){
@@ -30,7 +29,7 @@ int main(int argc, char** argv){
 
   //printf("nombre de points de l'ensemble : %d\n", n_points);
   for (unsigned int i = 0; i < puissance2(n_points); i ++){
-    printf("point %d, rang %d/%d\n", i, rkMin[i], rkMax[i]);
+    printf("ensemble %d, rang %d/%d\n", i, rkMin[i], rkMax[i]);
   }
 
   
@@ -40,7 +39,7 @@ int main(int argc, char** argv){
 
   printf("après la saturation\n");
   for (unsigned int i = 0; i < puissance2(n_points); i++) {
-    printf("point %d, rang %d/%d\n", i, rkMin[i], rkMax[i]);
+    printf("ensemble %d, rang %d/%d\n", i, rkMin[i], rkMax[i]);
   }  
 
 

@@ -44,7 +44,6 @@ bool RS4(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
 // (RS5) si rkMax(X) + rkMax(Y) − rkMin(X ∩ Y) < rkMax(X ∪ Y) alors rkMax(X ∪ Y) prend la valeur de rkMax(X) + rkMax(Y) − rkMin(X ∩ Y)
 bool RS5(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
   if (rkMax[x] + rkMax[y] - rkMin[intersectionEnsembles(x,y)] < rkMax[unionEnsembles(x,y)]){
-    rkMax[unionEnsembles(x,y)] = rkMax[x] + rkMax[y] - rkMin[intersectionEnsembles(x,y)];
     return true;
   }
   return false;
@@ -53,7 +52,6 @@ bool RS5(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
 // (RS6) si rkMax(X) + rkMax(Y) − rkMin(X ∪ Y) < rkMax(X ∩ Y) alors rkMax(X ∩ Y) prend la valeur de rkMax(X) + rkMax(Y) − rkMin(X ∪ Y)
 bool RS6(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
   if (rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)] < rkMax[intersectionEnsembles(x,y)]){
-    rkMax[intersectionEnsembles(x,y)] = rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)];
     return true;
   }
   return false;
@@ -86,7 +84,7 @@ void saturer(unsigned int* rkMin, unsigned int* rkMax, unsigned int n_points) {
   while (x < nbNoeuds) {
     ENSEMBLE y = 1;
     while (y < nbNoeuds) {
-      if (RS1(x,y,rkMin) || RS3(x,y,rkMax) || RS2(x,y,rkMin) || RS4(x,y,rkMax) || RS5(x,y,rkMin,rkMax) || RS6(x,y,rkMin,rkMax) || RS7(x,y,rkMin,rkMax) || RS8(x,y,rkMin,rkMax)) {
+      if (x != y && (RS1(x,y,rkMin) || RS3(x,y,rkMax) || RS2(x,y,rkMin) || RS4(x,y,rkMax) || RS5(x,y,rkMin,rkMax) || RS6(x,y,rkMin,rkMax) || RS7(x,y,rkMin,rkMax) || RS8(x,y,rkMin,rkMax))) {
           x = 1;
           y = 1;
         } else {
