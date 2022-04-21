@@ -91,9 +91,9 @@ int recupererLigne(char * motCle, char ** tableauLignes, char **ligneARecupere, 
   
 }
 
-/***
-  *Determine le cardinal de l'ensemble des points 
-  */
+/*
+Determine le cardinal de l'ensemble des points 
+*/
 unsigned int determinerCardinal(char **tableauLignes, char *separateurs, int nombreLignes){
   
   unsigned int cardinalEnsemble = 0; 
@@ -119,6 +119,10 @@ unsigned int determinerCardinal(char **tableauLignes, char *separateurs, int nom
   return cardinalEnsemble;
 }
 
+
+/*
+Remplie rkMax avec les valeurs du cardinal de l'ensemble
+*/
 int remplirRkMax(int cardinalEnsemble, unsigned int **rkMax){
   
   unsigned int tailleTableau = puissance2(cardinalEnsemble);
@@ -129,6 +133,24 @@ int remplirRkMax(int cardinalEnsemble, unsigned int **rkMax){
   // remplissage du tableau max 
   for (unsigned int j = 0; j < tailleTableau; j++){
     (*rkMax)[j] = cardinal(j);
+  }
+
+  return 0;
+}
+
+
+/*
+Remplie rkMin avec des 1
+*/
+int remplirRkMin(int cardinalEnsemble, unsigned int **rkMin){
+  unsigned int tailleTableau = puissance2(cardinalEnsemble);
+  
+  // allocation de la mémoire
+  *rkMin = (unsigned int *)malloc((tailleTableau * sizeof(unsigned int))); 
+  (*rkMin)[0] = 0;
+  // remplissage du tableau max 
+  for (unsigned int j = 1; j < tailleTableau; j++){
+    (*rkMin)[j] = 1;
   }
 
   return 0;
@@ -154,18 +176,22 @@ int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int*
   recupererTableauLignes(file, tableauLignes, buffer); 
 
   // récupération du nombre de points = cardinal de l'ensemble
-
-  unsigned int cardinalEnsemble; // initlialisation 
+  unsigned int cardinalEnsemble;
 
   char *separateurs = " \n";
 
   cardinalEnsemble = determinerCardinal(tableauLignes, separateurs, nbLignes);
   
   // complétion des tableau de rang
+  remplirRkMin(cardinalEnsemble, rkMin);
   remplirRkMax(cardinalEnsemble, rkMax);
 
   // retour des résultats :
   *n_points = cardinalEnsemble;
+
+  //TODO
+  char **tableauNomNoeuds = NULL;
+  // ajustement des tableaux de rang
 
   return 0;
 }
