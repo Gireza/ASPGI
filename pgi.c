@@ -30,7 +30,11 @@ int main(int argc, char** argv){
     printf("élément %d de rkMax : %d\n", i, rkMax[i]);
   }
 
-  
+  for (unsigned int i = 0; i < 16; i ++){
+    printf("élément %d de rkMin : %d\n", i, rkMin[i]);
+  }
+
+
   // DEBUT DE LA SATURATION
 
 

@@ -86,7 +86,7 @@ int recupererLigne(char * motCle, char ** tableauLignes, char **ligneARecupere, 
       nombreOccurence++;
     }
   }
-  printf("test");
+
   return -1;
   
 }
@@ -98,7 +98,7 @@ unsigned int determinerCardinal(char **tableauLignes, char *separateurs, int nom
   
   unsigned int cardinalEnsemble = 0; 
 
-  char *ligneDesPoints; // variable nécessaire à la restauration des points 
+  char *ligneDesPoints; // string de stockage de la ligne
   char *motClePoints = "Points";
   
   if (recupererLigne(motClePoints, tableauLignes, &ligneDesPoints, nombreLignes, 1) == -1) return 0;
@@ -127,23 +127,27 @@ int remplirRkMax(int cardinalEnsemble, unsigned int **rkMax){
   
   unsigned int tailleTableau = puissance2(cardinalEnsemble);
   
+  // allocation de la mémoirenomNoeud;
+  
   // allocation de la mémoire
   *rkMax = (unsigned int *)malloc((tailleTableau * sizeof(unsigned int))); 
-
+  (*rkMax)[0] = 0;
   // remplissage du tableau max 
-  for (unsigned int j = 0; j < tailleTableau; j++){
+  for (unsigned int j = 1; j < tailleTableau; j++){
     (*rkMax)[j] = cardinal(j);
   }
 
   return 0;
 }
 
-
 /*
-Remplie rkMin avec des 1
+Remplie rkMin avec les 1
 */
 int remplirRkMin(int cardinalEnsemble, unsigned int **rkMin){
+  
   unsigned int tailleTableau = puissance2(cardinalEnsemble);
+  
+  // allocation de la mémoirenomNoeud;
   
   // allocation de la mémoire
   *rkMin = (unsigned int *)malloc((tailleTableau * sizeof(unsigned int))); 
@@ -154,6 +158,67 @@ int remplirRkMin(int cardinalEnsemble, unsigned int **rkMin){
   }
 
   return 0;
+}
+
+/*
+Remplie le tableau des noms de noeuds
+*/
+void completionTableauNomNoeuds(char ***tabNoeuds, char  **tableauLignes,char *separateurs, int nombreLignes){
+  
+  (*tabNoeuds)[0] = malloc(strlen("Ø") + 1);
+  strcpy((*tabNoeuds)[0], "Ø");
+
+  char *ligneDesPoints; // string de stockage de la ligne
+  char *motClePoints = "Points";
+
+  recupererLigne(motClePoints, tableauLignes, &ligneDesPoints, nombreLignes, 1);
+
+  char *strToken = strtok(ligneDesPoints, separateurs);
+
+  strToken = strtok(NULL, separateurs);
+  
+  int indiceTabNoeuds = 0;
+  int pow2idTabNoeud = 0;
+            
+  size_t tailleNoeud;
+
+  while (strToken != NULL) {   
+      
+    indiceTabNoeuds = puissance2(pow2idTabNoeud);
+    // on ajoute 1 à la taille mémoire allouée (malloc) à la case du tableau pour le caractère terminal \0
+    (*tabNoeuds)[indiceTabNoeuds] = malloc(strlen(strToken) + 1);
+    // copie de la valeur parsée dans la case voulue
+    strcpy((*tabNoeuds)[indiceTabNoeuds], strToken);
+    // pour passer à la case "suivante"
+    pow2idTabNoeud++;
+
+    // token suivant
+    strToken = strtok(NULL, separateurs);
+
+    // DEFINITON ET ENREGISTREMENT DES SOUS ENSEMBLES
+    // (concaténation du nom du nouveau noeud avec le nom de chacun des sous ensembles précédents, inscrits dans les cases suivant le nouveau point du tableau)
+    // !!! ON ARRIVE A 2 PUISSANCE (NB DE POINTS) CASES DE TABLEAU => TAILLE DU TABLEAU A ALLOUER !!!
+
+    // à partir du deuxième point (id == 2)
+    if (indiceTabNoeuds > 1)
+    {
+      // pour chaque noeud précédent, concaténation avec le nom du nouveau point
+      for (int j = 1; j < indiceTabNoeuds; j++)
+      {
+        // taille du nom du sous ensemble nomNoeud[j] + nomNoeud[idTabNoeud]
+        // (nomNoeud[idTabNoeud] = nom du dernier noeud créé avec le dernier point trouvé et incrit dans la case d'id = idTabNoeud)
+        tailleNoeud = strlen((*tabNoeuds)[j]) + strlen((*tabNoeuds)[indiceTabNoeuds]) + 1;
+        // allocation de la mémoire de la case idTabNoeud + j
+        (*tabNoeuds)[indiceTabNoeuds + j] = malloc(tailleNoeud);
+        // copie du nom nomNoeud[j] dans la case nomNoeud[idTabNoeud + j]
+        strcpy((*tabNoeuds)[indiceTabNoeuds + j], (*tabNoeuds)[j]);
+        // concaténation avec nomNoeud[idTabNoeud]
+        strcat((*tabNoeuds)[indiceTabNoeuds + j], (*tabNoeuds)[indiceTabNoeuds]);
+      }
+    }
+  }
+
+
 }
 
 
@@ -186,12 +251,22 @@ int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int*
   remplirRkMin(cardinalEnsemble, rkMin);
   remplirRkMax(cardinalEnsemble, rkMax);
 
-  // retour des résultats :
-  *n_points = cardinalEnsemble;
+ 
 
   //TODO
-  char **tableauNomNoeuds = NULL;
+  // Creation de tableauNomNoeuds pour la prise en compte des hypothèses
+  char **tableauNomNoeuds = malloc(puissance2(cardinalEnsemble) * sizeof(char*));
+  
+  completionTableauNomNoeuds(&tableauNomNoeuds, tableauLignes, separateurs, nbLignes);
+  /*
+  for (unsigned int i = 0; i < 16; i ++){
+    printf("élément %d de tableauNomNoeuds : %s\n", i, (*tableauNomNoeuds)[i]);
+  }
+*/
   // ajustement des tableaux de rang
+
+  // retour des résultats :
+  *n_points = cardinalEnsemble;
 
   return 0;
 }
