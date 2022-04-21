@@ -13,15 +13,15 @@ unsigned int logarithme2(unsigned int n){
 }
 
 ENSEMBLE unionEnsembles(ENSEMBLE x, ENSEMBLE y) {
-  return(x & y);
+  return(x | y);
 }
 
 ENSEMBLE intersectionEnsembles(ENSEMBLE x, ENSEMBLE y) {
-  return (x | y);
+  return (x & y);
 }
 
 bool estSousEnsemble(ENSEMBLE x, ENSEMBLE y) {
-  return unionEnsembles(x, y) == x;
+  return intersectionEnsembles(x, y) == x;
 }
 
 /* prend l'indice de l'ensemble dans le tableau dont on veux connaitre

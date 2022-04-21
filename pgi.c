@@ -1,16 +1,19 @@
-#include <stdio.h>
 #include "parseur.h"
+#include "saturation.h"
+#include "ensemble.h"
+
+
+#include <stdio.h>
 
 int main(int argc, char** argv){
-
-  printf("les arguments du programme sont ");
-  for (int i = 0; i < argc; i++) {
-    printf("%s ", argv[i]);
+  if (argc != 2) {
+    printf("erreur dans les arguments");
+    return -1;
   }
-  printf("\n");
+ 
 
   FILE * file = NULL; // initialisation de file
-  file = fopen("problemes/fichier.txt", "r+"); // ouverture du fichier en lecture
+  file = fopen(argv[1], "r+"); // ouverture du fichier en lecture
 
   // initialisation des tableaux de rang (tableaux d'ints non signés) 
   unsigned int *rkMax; 
@@ -26,12 +29,19 @@ int main(int argc, char** argv){
   fclose(file);
 
   //printf("nombre de points de l'ensemble : %d\n", n_points);
-  for (unsigned int i = 0; i < 16; i ++){
-    printf("élément %d de rkMax : %d\n", i, rkMax[i]);
+  for (unsigned int i = 0; i < puissance2(n_points); i ++){
+    printf("point %d, rang %d/%d\n", i, rkMin[i], rkMax[i]);
   }
 
   
   // DEBUT DE LA SATURATION
+
+  saturer(rkMin, rkMax, n_points);
+
+  printf("après la saturation\n");
+  for (unsigned int i = 0; i < puissance2(n_points); i++) {
+    printf("point %d, rang %d/%d\n", i, rkMin[i], rkMax[i]);
+  }  
 
 
   return 0;
