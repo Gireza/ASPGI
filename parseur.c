@@ -156,6 +156,99 @@ int remplirRkMin(int cardinalEnsemble, unsigned int **rkMin){
   return 0;
 }
 
+ /*
+Remplie le tableau des noms de noeuds
+*/
+void completionTableauNomNoeuds(char ***tabNoeuds, char  **tableauLignes,char *separateurs, int nombreLignes){
+  
+  (*tabNoeuds)[0] = malloc(strlen("Ø") + 1);
+  strcpy((*tabNoeuds)[0], "Ø");
+
+  char *ligneDesPoints; // string de stockage de la ligne
+  char *motClePoints = "Points";
+
+  recupererLigne(motClePoints, tableauLignes, &ligneDesPoints, nombreLignes, 1);
+
+  char *strToken = strtok(ligneDesPoints, separateurs);
+
+  strToken = strtok(NULL, separateurs);
+  
+  int indiceTabNoeuds = 0;
+  int pow2idTabNoeud = 0;
+            
+  size_t tailleNoeud;
+
+  while (strToken != NULL) {   
+      
+    indiceTabNoeuds = puissance2(pow2idTabNoeud);
+    // on ajoute 1 à la taille mémoire allouée (malloc) à la case du tableau pour le caractère terminal \0
+    (*tabNoeuds)[indiceTabNoeuds] = malloc(strlen(strToken) + 1);
+    // copie de la valeur parsée dans la case voulue
+    strcpy((*tabNoeuds)[indiceTabNoeuds], strToken);
+    // pour passer à la case "suivante"
+    pow2idTabNoeud++;
+
+    // token suivant
+    strToken = strtok(NULL, separateurs);
+
+    // DEFINITON ET ENREGISTREMENT DES SOUS ENSEMBLES
+    // (concaténation du nom du nouveau noeud avec le nom de chacun des sous ensembles précédents, inscrits dans les cases suivant le nouveau point du tableau)
+    // !!! ON ARRIVE A 2 PUISSANCE (NB DE POINTS) CASES DE TABLEAU => TAILLE DU TABLEAU A ALLOUER !!!
+
+    // à partir du deuxième point (id == 2)
+    if (indiceTabNoeuds > 1) {
+      // pour chaque noeud précédent, concaténation avec le nom du nouveau point
+      for (int j = 1; j < indiceTabNoeuds; j++) {
+        // taille du nom du sous ensemble nomNoeud[j] + nomNoeud[idTabNoeud]
+        // (nomNoeud[idTabNoeud] = nom du dernier noeud créé avec le dernier point trouvé et incrit dans la case d'id = idTabNoeud)
+        tailleNoeud = strlen((*tabNoeuds)[j]) + strlen((*tabNoeuds)[indiceTabNoeuds]) + 1;
+        // allocation de la mémoire de la case idTabNoeud + j
+        (*tabNoeuds)[indiceTabNoeuds + j] = malloc(tailleNoeud);
+        // copie du nom nomNoeud[j] dans la case nomNoeud[idTabNoeud + j]
+        strcpy((*tabNoeuds)[indiceTabNoeuds + j], (*tabNoeuds)[j]);
+        // concaténation avec nomNoeud[idTabNoeud]
+        strcat((*tabNoeuds)[indiceTabNoeuds + j], (*tabNoeuds)[indiceTabNoeuds]);
+      }
+    }
+  }
+}
+
+int completionTableauxRangs(char **tableauNomNoeuds, char **tableauLignes, unsigned int **rkMin, unsigned int **rkMax, int nombreLignes){
+  
+  unsigned int rkM = 0;
+  unsigned int rkm = 0;
+  char noeud[30] = {'s','t','o','c','k','a','g','e'};
+
+  char *motCleHypothese = "Hypo";
+
+  int occurence = occurenceMotCle(motCleHypothese, tableauLignes, nombreLignes);
+
+  for (int i = 1 ; i <= occurence ; i++){
+
+    char *ligneHypothese;
+
+    if (recupererLigne(motCleHypothese, tableauLignes, &ligneHypothese, nombreLignes, i) == -1) return -1;
+    
+    (void)sscanf(ligneHypothese, "%*s %s %d/%d", noeud, &rkM, &rkm); // echappement du mot clé avec %* 
+    
+    printf("%s %d/%d\n", noeud, rkM, rkm);
+
+    int j = 1;
+
+    while (strcmp(tableauNomNoeuds[j], noeud) != 0) {
+      j++;
+    }
+
+    // mise a jour des rangs min et max 
+    (*rkMax)[j] = rkM;
+    (*rkMin)[j] = rkm;
+
+  }
+
+  return 0;
+
+}
+
 
 int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int* n_points){
 
@@ -189,9 +282,23 @@ int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int*
   // retour des résultats :
   *n_points = cardinalEnsemble;
 
-  //TODO
-  char **tableauNomNoeuds = NULL;
-  // ajustement des tableaux de rang
+  
+  // Creation de tableauNomNoeuds pour la prise en compte des hypothèses
+  char **tableauNomNoeuds = malloc(puissance2(cardinalEnsemble) * sizeof(char*));
+  
+  completionTableauNomNoeuds(&tableauNomNoeuds, tableauLignes, separateurs, nbLignes);
+
+  /*
+  for (unsigned int i = 0 ; i < puissance2(cardinalEnsemble); i++){
+    printf("element n° %d de tableauNomNoeuds : %s\n", i, tableauNomNoeuds[i]);
+  }
+  */
+
+  // Complétion des rangs min et max avec les infos des 
+
+  if (completionTableauxRangs(tableauNomNoeuds, tableauLignes, rkMin, rkMax, nbLignes) == -1) return -1;
+
+  // extractionResultat(tableauNomNoeuds, tableauLignes);
 
   return 0;
 }
