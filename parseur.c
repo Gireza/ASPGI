@@ -217,7 +217,7 @@ int completionTableauxRangs(char **tableauNomNoeuds, char **tableauLignes, unsig
   
   unsigned int rkM = 0;
   unsigned int rkm = 0;
-  char noeud[30] = {'s','t','o','c','k','a','g','e'};
+  char noeud[30] = {'s','t','o','c','k','a','g','e'}; // initialisation du string du noeud
 
   char *motCleHypothese = "Hypo";
 
@@ -249,8 +249,35 @@ int completionTableauxRangs(char **tableauNomNoeuds, char **tableauLignes, unsig
 
 }
 
+int extractionResultat(char **tableauNomNoeuds, char **tableauLignes, int nombreLignes, unsigned int* indexResult, unsigned int * rkMaxResult, unsigned int * rkMinResult){
+  
+  unsigned int rkMin = 0;
+  unsigned int rkMax = 0;
+  unsigned int index = 0;
 
-int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int* n_points){
+  char noeud[30] = {'s','t','o','c','k','a','g','e'};
+
+  char *motCleResultat = "Result";
+
+  char *ligneResultat;
+
+  if (recupererLigne(motCleResultat, tableauLignes, &ligneResultat, nombreLignes, 1) == -1) return -1;
+  
+  (void)sscanf(ligneResultat, "%*s %s %d/%d", noeud, &rkMin, &rkMax); // echappement du mot clé avec %* 
+  
+  while (strcmp(tableauNomNoeuds[index], noeud) != 0){ // TODO : gestion noeud n'existe pas 
+    index++;
+  }
+
+  *rkMinResult = rkMin;
+  *rkMaxResult = rkMax;
+  *indexResult = index;
+  
+
+  return 0;
+}
+
+int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int* n_points, unsigned int * indexResult, unsigned int * rkMaxResult, unsigned int * rkMinResult){
 
   if (file == NULL) { return -1; }
   
@@ -258,12 +285,12 @@ int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int*
   char buffer[501] = "0";
 
   // récupération du nombre de lignes
-  int nbLignes = calculeNombreLignes(file, buffer);
+  int nbLignesFichier = calculeNombreLignes(file, buffer);
 
   //printf("nombre de lignes du fichier : %d\n", nbLignes);
 
   // intitialisation du tableau pour stocker les lignes de l'énoncé
-  char **tableauLignes = malloc(nbLignes * sizeof(char*));
+  char **tableauLignes = malloc(nbLignesFichier * sizeof(char*));
   
   // récupération du contenue du tableau
   recupererTableauLignes(file, tableauLignes, buffer); 
@@ -273,7 +300,7 @@ int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int*
 
   char *separateurs = " \n";
 
-  cardinalEnsemble = determinerCardinal(tableauLignes, separateurs, nbLignes);
+  cardinalEnsemble = determinerCardinal(tableauLignes, separateurs, nbLignesFichier);
   
   // complétion des tableau de rang
   remplirRkMin(cardinalEnsemble, rkMin);
@@ -286,7 +313,7 @@ int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int*
   // Creation de tableauNomNoeuds pour la prise en compte des hypothèses
   char **tableauNomNoeuds = malloc(puissance2(cardinalEnsemble) * sizeof(char*));
   
-  completionTableauNomNoeuds(&tableauNomNoeuds, tableauLignes, separateurs, nbLignes);
+  completionTableauNomNoeuds(&tableauNomNoeuds, tableauLignes, separateurs, nbLignesFichier);
 
   /*
   for (unsigned int i = 0 ; i < puissance2(cardinalEnsemble); i++){
@@ -294,11 +321,12 @@ int parse(FILE * file, unsigned int **rkMin, unsigned int **rkMax, unsigned int*
   }
   */
 
-  // Complétion des rangs min et max avec les infos des 
+  // Complétion des rangs min et max
+  if (completionTableauxRangs(tableauNomNoeuds, tableauLignes, rkMin, rkMax, nbLignesFichier) == -1) return -1;
 
-  if (completionTableauxRangs(tableauNomNoeuds, tableauLignes, rkMin, rkMax, nbLignes) == -1) return -1;
+  // Extraction des résultats
+  if (extractionResultat(tableauNomNoeuds, tableauLignes, nbLignesFichier, indexResult, rkMaxResult, rkMinResult) == -1) return -1;
 
-  // extractionResultat(tableauNomNoeuds, tableauLignes);
 
   return 0;
 }

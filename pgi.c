@@ -18,11 +18,16 @@ int main(int argc, char** argv){
   unsigned int *rkMax; 
   unsigned int *rkMin;
 
+  // initialisation des variables stockant le résultat 
+  unsigned int  indexResult;
+  unsigned int  rkMaxResult;
+  unsigned int  rkMinResult;
+
   // initialisation du nombre de point
   unsigned int n_points;
   
   // utilisation de parse
-  if (parse(file, &rkMin, &rkMax, &n_points) == -1) { printf("Erreur de parsage du fichier"); }
+  if (parse(file, &rkMin, &rkMax, &n_points, &indexResult, &rkMaxResult, &rkMinResult) == -1) { printf("Erreur de parsage du fichier"); }
 
   // Fermeture du fichier
   fclose(file);
