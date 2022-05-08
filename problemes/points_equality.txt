@@ -1,0 +1,5 @@
+(* points_equality p. 139 *)
+Points A B C D
+Hypo ABC 3/3
+Hypo CD 1/1
+Result ABD 3/3

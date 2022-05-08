@@ -1,0 +1,6 @@
+(* over_constrained p. 138 *)
+Points A B C D
+Hypo ABC 3/3
+Hypo BCD 3/3
+Hypo ABCD 4/4
+Result BC 2/2

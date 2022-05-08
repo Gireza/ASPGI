@@ -1,0 +1,29 @@
+(* harmonic_conjugate p. 154 *)
+Points A B C P Q R P' Q' R' U U' D D' O
+Hypo ABC 2/2
+Hypo AB 2/2
+Hypo AC 2/2
+Hypo BC 2/2
+Hypo PQR 3/3
+Hypo P'Q'R' 3/3
+Hypo ABRR' 4/4
+Hypo ABR 3/3
+Hypo ABQ 3/3
+Hypo AQR 2/2
+Hypo BPR 2/2
+Hypo CPQ 2/2
+Hypo APU 2/2
+Hypo BQU 2/2
+Hypo DRU 2/2
+Hypo ABR' 3/3
+Hypo ABQ' 3/3
+Hypo AQ'R' 2/2
+Hypo BP'R' 2/2
+Hypo CP'Q' 2/2
+Hypo AP'U' 2/2
+Hypo BQ'U' 2/2
+Hypo D'R'U' 2/2
+Hypo ABCDD' 2/2
+Hypo PP'O 2/2
+Hypo QQ'O 2/2
+Result DD' 1/1

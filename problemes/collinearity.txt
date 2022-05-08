@@ -1,0 +1,6 @@
+(* collinearity p. 137 *)
+Points A B C D
+Hypo BC 2/2
+Hypo ABC 2/2
+Hypo BCD 2/2
+Result ABCD 2/2

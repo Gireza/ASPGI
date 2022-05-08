@@ -1,0 +1,7 @@
+(* line_unification p.135 *)
+Points A B C
+Hypo AB 2/2
+Hypo AC 2/2
+Hypo BC 2/2
+Result ABC 2/2
+

@@ -1,2 +1,4 @@
 *.o
 pgi
+.idea/
+.DS_Store

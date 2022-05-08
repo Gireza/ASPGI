@@ -1,0 +1,8 @@
+(* l1_sheme P. 141 *)
+Points A B O A' B'
+Hypo ABO 3/3
+Hypo AA'O 2/2
+Hypo BB'O 2/2
+Hypo A'O 2/2
+Hypo B'O 2/2
+Result A'B'O 3/3

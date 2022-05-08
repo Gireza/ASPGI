@@ -1,0 +1,12 @@
+(* desargues_3D p. 149 *)
+Points P Q R P' Q' R' O alpha beta gamma
+Hypo PP' 2/2
+Hypo QQ' 2/2
+Hypo RR' 2/2
+Hypo PP'O 2/2
+Hypo QQ'O 2/2
+Hypo RR'O 2/2
+Hypo PQR 3/3
+Hypo P'Q'R' 3/3
+Hypo PQRP'Q'R' 4/4
+Result alphabetagamma 2/2

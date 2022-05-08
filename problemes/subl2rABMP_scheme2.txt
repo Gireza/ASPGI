@@ -1,0 +1,6 @@
+(* subl2rABMP_scheme p. 143 *)
+Points A B C A' B' C' O M
+Hypo ABC 3/3
+Hypo ABCA'B'C'O 3/3
+Hypo MA' 1/1
+Result ABCM 3/3
