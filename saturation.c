@@ -75,9 +75,14 @@ bool RS8(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
   return false;
 }
 
-void saturer(unsigned int* rkMin, unsigned int* rkMax, unsigned int n_points) {
+void saturer(unsigned int * rkMin, unsigned int * rkMax, unsigned int n_points) {
 
   unsigned int nbNoeuds = puissance2(n_points);
+  printf("%d\n", n_points);
+  for (unsigned int i = 1; i < puissance2(n_points); i ++){
+    printf("rang %d/%d\n", rkMax[i], rkMin[i]);
+  }
+  printf("\n");
 
   ENSEMBLE x = 1;
 
@@ -85,12 +90,19 @@ void saturer(unsigned int* rkMin, unsigned int* rkMax, unsigned int n_points) {
     ENSEMBLE y = 1;
     while (y < nbNoeuds) {
       if (x != y && (RS1(x,y,rkMin) || RS3(x,y,rkMax) || RS2(x,y,rkMin) || RS4(x,y,rkMax) || RS5(x,y,rkMin,rkMax) || RS6(x,y,rkMin,rkMax) || RS7(x,y,rkMin,rkMax) || RS8(x,y,rkMin,rkMax))) {
-          x = 1;
-          y = 1;
-        } else {
-          y++;
-        }
-        x++;
-    }  
+        x = 1;
+        y = 1;
+        printf("IF ");
+      } else {
+        y++;
+        printf("y:%d ", y);
+      }
+    }
+    x++;
+    printf("[X]:%d ", x);
   }
+
+  /* for (unsigned int i = 1; i < puissance2(n_points); i ++){
+    printf("rang %d/%d\n", rkMax[i], rkMin[i]);
+  } */
 }
