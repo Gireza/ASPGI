@@ -14,6 +14,9 @@ int main(int argc, char** argv){
   FILE * file = NULL; // initialisation de file
   file = fopen(argv[1], "r+"); // ouverture du fichier en lecture
 
+  // initialisation du tableau de noms d'ensembles
+  char **tableauNomNoeuds;
+
   // initialisation des tableaux de rang (tableaux d'ints non signés) 
   unsigned int *rkMax; 
   unsigned int *rkMin;
@@ -27,14 +30,14 @@ int main(int argc, char** argv){
   unsigned int n_points;
   
   // utilisation de parse
-  if (parse(file, &rkMin, &rkMax, &n_points, &indexResult, &rkMaxResult, &rkMinResult) == -1) { printf("Erreur de parsage du fichier"); }
+  if (parse(file, &tableauNomNoeuds, &rkMin, &rkMax, &n_points, &indexResult, &rkMaxResult, &rkMinResult) == -1) { printf("Erreur de parsage du fichier"); }
 
   // Fermeture du fichier
   fclose(file);
 
   //printf("nombre de points de l'ensemble : %d\n", n_points);
-  for (unsigned int i = 0; i < puissance2(n_points); i ++){
-    printf("ensemble %d, rang %d/%d\n", i, rkMin[i], rkMax[i]);
+  for (unsigned int i = 1; i < puissance2(n_points); i ++){
+    printf("%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
   }
 
   
@@ -42,9 +45,9 @@ int main(int argc, char** argv){
 
   saturer(rkMin, rkMax, n_points);
 
-  printf("après la saturation\n");
-  for (unsigned int i = 0; i < puissance2(n_points); i++) {
-    printf("ensemble %d, rang %d/%d\n", i, rkMin[i], rkMax[i]);
+  printf("Après saturation :\n");
+  for (unsigned int i = 1; i < puissance2(n_points); i++) {
+    printf("%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
   }  
 
 
