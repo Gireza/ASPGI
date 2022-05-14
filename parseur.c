@@ -244,7 +244,7 @@ int completionTableauxRangs(char ***tableauNomNoeuds, char **tableauLignes, unsi
     (*rkMin)[j] = rkm;
 
   }
-
+  printf("\n");
   return 0;
 
 }
