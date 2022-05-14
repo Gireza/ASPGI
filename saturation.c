@@ -7,9 +7,10 @@
 bool RS1(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin){
   if (estSousEnsemble(x,y) && rkMin[x] > rkMin[y]){
     rkMin[y] = rkMin[x];
+    printf("-----RS1----- ");
     return true;
-        
   }
+  printf("rs1-false ");
   return false;
 }
 
@@ -17,9 +18,10 @@ bool RS1(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin){
 bool RS2(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin){
   if (estSousEnsemble(y,x) && rkMin[y] > rkMin[x]){
     rkMin[x] = rkMin[y];
-    return true;
-            
+    printf("-----RS2----- "); 
+    return true;     
   }
+  printf("rs2-false ");
   return false;
 }
 
@@ -27,8 +29,10 @@ bool RS2(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin){
 bool RS3(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
   if (estSousEnsemble(x,y) && rkMax[y] < rkMax[x]) {
     rkMax[x] = rkMax[y];
+    printf("-----RS3----- ");
     return true;
   }
+  printf("rs3-false ");
   return false;
 }
 
@@ -36,24 +40,30 @@ bool RS3(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
 bool RS4(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
   if (estSousEnsemble(y,x) && rkMax[y] > rkMax[x]) {
     rkMax[y] = rkMax[x];
+    printf("-----RS4----- ");
     return true;
   }
+  printf("rs4-false ");
   return false;
 }
 
 // (RS5) si rkMax(X) + rkMax(Y) − rkMin(X ∩ Y) < rkMax(X ∪ Y) alors rkMax(X ∪ Y) prend la valeur de rkMax(X) + rkMax(Y) − rkMin(X ∩ Y)
 bool RS5(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
   if (rkMax[x] + rkMax[y] - rkMin[intersectionEnsembles(x,y)] < rkMax[unionEnsembles(x,y)]){
+    printf("-----RS5----- ");
     return true;
   }
+  printf("rs5-false ");
   return false;
 }
 
 // (RS6) si rkMax(X) + rkMax(Y) − rkMin(X ∪ Y) < rkMax(X ∩ Y) alors rkMax(X ∩ Y) prend la valeur de rkMax(X) + rkMax(Y) − rkMin(X ∪ Y)
 bool RS6(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
   if (rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)] < rkMax[intersectionEnsembles(x,y)]){
+    printf("-----RS6----- ");
     return true;
   }
+  printf("rs6-false ");
   return false;
 }
 
@@ -61,8 +71,10 @@ bool RS6(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
 bool RS7(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
   if (rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y] > rkMin[x]){
     rkMin[x] = rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y];
+    printf("-----RS7----- ");
     return true;
   }
+  printf("rs7-false ");
   return false;
 }
 
@@ -70,8 +82,10 @@ bool RS7(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
 bool RS8(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
   if (rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x] > rkMin[y]){
     rkMin[y] = rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x];
+    printf("-----RS8----- ");
     return true;
   }
+  printf("rs8-false ");
   return false;
 }
 
@@ -99,7 +113,7 @@ void saturer(unsigned int * rkMin, unsigned int * rkMax, unsigned int n_points) 
       }
     }
     x++;
-    printf("[X]:%d ", x);
+    printf("---[X]---:%d ", x);
   }
 
   /* for (unsigned int i = 1; i < puissance2(n_points); i ++){
