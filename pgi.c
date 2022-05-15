@@ -35,9 +35,7 @@ int main(int argc, char** argv){
   // Fermeture du fichier
   fclose(file);
 
-  // affihage du résultat
-  printf("Résultat attendu %s %d/%d\n\n", tableauNomNoeuds[indexResult], rkMaxResult, rkMinResult);
-
+  printf("Après hypothèses :\n\n");
   //printf("nombre de points de l'ensemble : %d\n", n_points);
   for (unsigned int i = 1; i < puissance2(n_points); i ++){
     printf("%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
@@ -48,10 +46,11 @@ int main(int argc, char** argv){
 
   saturer(rkMin, rkMax, n_points);
 
-  printf("Après saturation :\n");
+  printf("Après saturation :\n\n");
   for (unsigned int i = 1; i < puissance2(n_points); i++) {
     printf("%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
   }
+  printf("\n\n");
 
   // affihage du résultat
   printf("Résultat attendu %s %d/%d\n\n", tableauNomNoeuds[indexResult], rkMaxResult, rkMinResult);
