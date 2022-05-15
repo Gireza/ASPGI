@@ -18,7 +18,7 @@ main.o: hello.h
 .PHONY: clean mrproper
 
 clean:
-	@rm -rf *.o
+	@rm -rf *.o result.txt
 
 mrproper: clean
 	@rm -rf $(EXEC)

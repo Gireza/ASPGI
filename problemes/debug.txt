@@ -1,7 +1,8 @@
 // Fichier de debug
 // fonctionne jusqu'à 8 points
 // si on rajoute un 9eme point : "zsh: segmentation fault  ./pgi ./problemes/debug.txt"
-Points A B C' D E F G H
+Points A B C' D
+//E F G H
 Hypo ABD 3/3
 Hypo AC'D 2/2
 Hypo AC' 2/2
