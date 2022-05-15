@@ -41,15 +41,16 @@ int main(int argc, char** argv){
   for(int i=2; i < argc; i++){
     if(strcmp(argv[i], "-f")==0) pFich = 1;
     if(strcmp(argv[i], "-t")==0) pTerm = 1;
+    if(strcmp(argv[i], "-d")==0) pTerm = 2;
   }
   
   // utilisation de parse
   if (parse(file, &tableauNomNoeuds, &rkMin, &rkMax, &n_points, &indexResult, &rkMaxResult, &rkMinResult) == -1) { printf("Erreur de parsage du fichier"); }
 
   // Fermeture du fichier
-  // fclose(file);
+  fclose(file);
 
-  if(pTerm==1){
+  if(pTerm>0){
     printf("Après hypothèses :\n\n");
     affichageTerminal(tableauNomNoeuds, rkMax, rkMin, n_points);
   }
@@ -58,7 +59,7 @@ int main(int argc, char** argv){
 
   saturer(rkMin, rkMax, n_points);
 
-  if(pTerm==1){
+  if(pTerm>0){
   printf("Après saturation :\n\n");
   affichageTerminal(tableauNomNoeuds, rkMax, rkMin, n_points);
   }
@@ -69,10 +70,13 @@ int main(int argc, char** argv){
     fprintf(file, "%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
   } */
   if(pFich==1){
-  ecritureFichier(file, tableauNomNoeuds, rkMax, rkMin, n_points);
+    FILE * resultat = NULL;
+    resultat = fopen("resultat.txt", "w");
+    ecritureFichier(resultat, tableauNomNoeuds, rkMax, rkMin, n_points);
+    fclose(resultat);
   }
   // Fermeture du fichier de resultat
-  fclose(file);
+  
 
   // affihage du résultat
   printf("Résultat attendu %s %d/%d\n\n", tableauNomNoeuds[indexResult], rkMaxResult, rkMinResult);

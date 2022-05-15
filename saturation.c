@@ -116,8 +116,5 @@ void saturer(unsigned int * rkMin, unsigned int * rkMax, unsigned int n_points) 
     printf("\n---|x:%d|--- ", x);
   }
 
-  /* for (unsigned int i = 1; i < puissance2(n_points); i ++){
-    printf("rang %d/%d\n", rkMax[i], rkMin[i]);
-  } */
   printf("\n\n");
 }

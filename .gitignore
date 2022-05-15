@@ -1,4 +1,8 @@
+# Object files, executable and result file
 *.o
 pgi
+resultat.txt
+
+# IDE directory and files
 .idea/
 .DS_Store
