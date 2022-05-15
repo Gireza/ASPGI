@@ -6,7 +6,7 @@ SRC= $(wildcard *.c)
 OBJ= $(SRC:.c=.o)
 
 all: $(EXEC)
-
+	
 pgi: $(OBJ)
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
@@ -18,7 +18,7 @@ main.o: hello.h
 .PHONY: clean mrproper
 
 clean:
-	@rm -rf *.o result.txt
+	@rm -rf *.o resultat.txt
 
 mrproper: clean
 	@rm -rf $(EXEC)

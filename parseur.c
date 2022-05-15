@@ -230,8 +230,6 @@ int completionTableauxRangs(char **tableauNomNoeuds, char **tableauLignes, unsig
     if (recupererLigne(motCleHypothese, tableauLignes, &ligneHypothese, nombreLignes, i) == -1) return -1;
     
     (void)sscanf(ligneHypothese, "%*s %s %d/%d", noeud, &rkM, &rkm); // echappement du mot clé avec %* 
-    
-    printf("%s %d/%d\n", noeud, rkM, rkm);
 
     int j = 1;
 
@@ -287,8 +285,6 @@ int parse(FILE * file, char ***tableauNomNoeuds, unsigned int **rkMin, unsigned 
   // récupération du nombre de lignes
   int nbLignesFichier = calculeNombreLignes(file, buffer);
 
-  //printf("nombre de lignes du fichier : %d\n", nbLignes);
-
   // intitialisation du tableau pour stocker les lignes de l'énoncé
   char **tableauLignes = malloc(nbLignesFichier * sizeof(char*));
   
@@ -313,13 +309,8 @@ int parse(FILE * file, char ***tableauNomNoeuds, unsigned int **rkMin, unsigned 
   // Allocation mémoire de tableauNomNoeuds pour la prise en compte des hypothèses
   *tableauNomNoeuds = malloc(puissance2(cardinalEnsemble) * sizeof(char*));
   
+  // Remplie le tableau des noms des noeuds
   completionTableauNomNoeuds(tableauNomNoeuds, tableauLignes, separateurs, nbLignesFichier);
-
-  /*
-  for (unsigned int i = 0 ; i < puissance2(cardinalEnsemble); i++){
-    printf("element n° %d de tableauNomNoeuds : %s\n", i, tableauNomNoeuds[i]);
-  }
-  */
 
   // Complétion des rangs min et max
   if (completionTableauxRangs(*tableauNomNoeuds, tableauLignes, rkMin, rkMax, nbLignesFichier) == -1) return -1;
