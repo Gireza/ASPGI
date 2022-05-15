@@ -51,7 +51,7 @@ int main(int argc, char** argv){
   saturer(rkMin, rkMax, n_points);
 
   printf("Après saturation :\n\n");
-  
+
   affichageTerminal(tableauNomNoeuds, rkMax, rkMin, n_points);
 
 
@@ -59,9 +59,12 @@ int main(int argc, char** argv){
   fprintf(file, "\n");
   for (unsigned int i = 1; i < puissance2(n_points); i ++){
     fprintf(file, "%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
-  }
+  } */
+
+  ecritureFichier(file, tableauNomNoeuds, rkMax, rkMin, n_points);
+  
   // Fermeture du fichier de resultat
-  fclose(file); */
+  fclose(file);
 
   // affihage du résultat
   printf("Résultat attendu %s %d/%d\n\n", tableauNomNoeuds[indexResult], rkMaxResult, rkMinResult);

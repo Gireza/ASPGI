@@ -10,3 +10,10 @@ void affichageTerminal(char ** tableauNomNoeuds, unsigned int *rkMax, unsigned i
   }
   printf("\n");
 }
+
+void ecritureFichier(FILE * file, char ** tableauNomNoeuds, unsigned int *rkMax, unsigned int *rkMin, unsigned int n_points){
+    fprintf(file, "\n\n");
+    for (unsigned int i = 1; i < puissance2(n_points); i ++){
+        fprintf(file, "%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
+    }
+}
