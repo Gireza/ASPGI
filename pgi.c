@@ -57,7 +57,7 @@ int main(int argc, char** argv){
   
   // DEBUT DE LA SATURATION
 
-  saturer(rkMin, rkMax, n_points);
+  saturer(rkMin, rkMax, n_points, tableauNomNoeuds, pTerm);
 
   if(pTerm>0){
   printf("Après saturation :\n\n");
