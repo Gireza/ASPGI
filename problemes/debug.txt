@@ -8,18 +8,3 @@ Hypo AC'D 2/2
 Hypo AC' 2/2
 Hypo C'D 2/2
 Result ABC' 3/3
-A 1/-1
-B 1/-2
-AB 2/-1
-C' 1/-2
-AC' 2/-1
-BC' 2/-2
-ABC' 3/-1
-D 1/-2
-AD 2/-1
-BD 2/-2
-ABD 3/-1
-C'D 2/-2
-AC'D 2/-1
-BC'D 3/-2
-ABC'D 3/-1

@@ -2,15 +2,15 @@
 #include "saturation.h"
 #include "ensemble.h"
 #include "affichage.h"
+#include "string.h"
 
 #include <stdio.h>
 
 int main(int argc, char** argv){
-  if (argc != 2) {
+  if (argc < 2) {
     printf("erreur dans les arguments");
     return -1;
   }
- 
 
   FILE * file = NULL; // initialisation de file
   file = fopen(argv[1], "r+"); // ouverture du fichier en lecture
@@ -35,6 +35,13 @@ int main(int argc, char** argv){
 
   // initialisation du nombre de point
   unsigned int n_points;
+ 
+  int pFich = 0;
+  int pTerm = 0;
+  for(int i=2; i < argc; i++){
+    if(strcmp(argv[i], "-f")==0) pFich = 1;
+    if(strcmp(argv[i], "-t")==0) pTerm = 1;
+  }
   
   // utilisation de parse
   if (parse(file, &tableauNomNoeuds, &rkMin, &rkMax, &n_points, &indexResult, &rkMaxResult, &rkMinResult) == -1) { printf("Erreur de parsage du fichier"); }
@@ -42,27 +49,28 @@ int main(int argc, char** argv){
   // Fermeture du fichier
   // fclose(file);
 
-  printf("Après hypothèses :\n\n");
-
-  affichageTerminal(tableauNomNoeuds, rkMax, rkMin, n_points);
+  if(pTerm==1){
+    printf("Après hypothèses :\n\n");
+    affichageTerminal(tableauNomNoeuds, rkMax, rkMin, n_points);
+  }
   
   // DEBUT DE LA SATURATION
 
   saturer(rkMin, rkMax, n_points);
 
+  if(pTerm==1){
   printf("Après saturation :\n\n");
-
   affichageTerminal(tableauNomNoeuds, rkMax, rkMin, n_points);
-
+  }
 
   /* // écriture des ensembles saturés dans le fichier
   fprintf(file, "\n");
   for (unsigned int i = 1; i < puissance2(n_points); i ++){
     fprintf(file, "%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
   } */
-
+  if(pFich==1){
   ecritureFichier(file, tableauNomNoeuds, rkMax, rkMin, n_points);
-  
+  }
   // Fermeture du fichier de resultat
   fclose(file);
 
