@@ -48,10 +48,13 @@ int main(int argc, char** argv){
 
   saturer(rkMin, rkMax, n_points);
 
-  /* printf("Après saturation :\n");
+  printf("Après saturation :\n");
   for (unsigned int i = 1; i < puissance2(n_points); i++) {
     printf("%s %d/%d\n", tableauNomNoeuds[i], rkMax[i], rkMin[i]);
-  }  */ 
+  }
+
+  // affihage du résultat
+  printf("Résultat attendu %s %d/%d\n\n", tableauNomNoeuds[indexResult], rkMaxResult, rkMinResult);
 
 
   return 0;

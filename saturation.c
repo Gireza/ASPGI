@@ -10,7 +10,7 @@ bool RS1(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin){
     printf("-----RS1----- ");
     return true;
   }
-  printf("rs1-false ");
+  printf("rs1 ");
   return false;
 }
 
@@ -21,7 +21,7 @@ bool RS2(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin){
     printf("-----RS2----- "); 
     return true;     
   }
-  printf("rs2-false ");
+  printf("rs2 ");
   return false;
 }
 
@@ -32,7 +32,7 @@ bool RS3(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
     printf("-----RS3----- ");
     return true;
   }
-  printf("rs3-false ");
+  printf("rs3 ");
   return false;
 }
 
@@ -43,7 +43,7 @@ bool RS4(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
     printf("-----RS4----- ");
     return true;
   }
-  printf("rs4-false ");
+  printf("rs4 ");
   return false;
 }
 
@@ -54,7 +54,7 @@ bool RS5(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
     printf("-----RS5----- ");
     return true;
   }
-  printf("rs5-false ");
+  printf("rs5 ");
   return false;
 }
 
@@ -65,7 +65,7 @@ bool RS6(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
     printf("-----RS6----- ");
     return true;
   }
-  printf("rs6-false ");
+  printf("rs6 ");
   return false;
 }
 
@@ -76,7 +76,7 @@ bool RS7(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
     printf("-----RS7----- ");
     return true;
   }
-  printf("rs7-false ");
+  printf("rs7 ");
   return false;
 }
 
@@ -87,35 +87,33 @@ bool RS8(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
     printf("-----RS8----- ");
     return true;
   }
-  printf("rs8-false ");
+  printf("rs8 ");
   return false;
 }
 
 void saturer(unsigned int * rkMin, unsigned int * rkMax, unsigned int n_points) {
 
   unsigned int nbNoeuds = puissance2(n_points);
-  printf("%d\n", n_points);
-  for (unsigned int i = 1; i < puissance2(n_points); i ++){
-    printf("rang %d/%d\n", rkMax[i], rkMin[i]);
-  }
-  printf("\n");
 
   ENSEMBLE x = 1;
+  printf("---|x:%d|--- ", x);
 
   while (x < nbNoeuds) {
     ENSEMBLE y = 1;
+    printf("|y:%d| ", y);
     while (y < nbNoeuds) {
       if (x != y && (RS1(x,y,rkMin) || RS3(x,y,rkMax) || RS2(x,y,rkMin) || RS4(x,y,rkMax) || RS5(x,y,rkMin,rkMax) || RS6(x,y,rkMin,rkMax) || RS7(x,y,rkMin,rkMax) || RS8(x,y,rkMin,rkMax))) {
         x = 1;
+        printf("(x:%d ", x);
         y = 1;
-        printf("IF ");
+        printf("y:%d) ", y);
       } else {
         y++;
-        printf("y:%d ", y);
+        printf("|y:%d| ", y);
       }
     }
     x++;
-    printf("---[X]---:%d ", x);
+    printf("\n---|x:%d|--- ", x);
   }
 
   /* for (unsigned int i = 1; i < puissance2(n_points); i ++){
