@@ -5,4 +5,5 @@ resultat.txt
 
 # IDE directory and files
 .idea/
+.vscode/
 .DS_Store
