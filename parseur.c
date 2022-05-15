@@ -213,7 +213,7 @@ void completionTableauNomNoeuds(char ***tabNoeuds, char  **tableauLignes,char *s
   }
 }
 
-int completionTableauxRangs(char ***tableauNomNoeuds, char **tableauLignes, unsigned int **rkMin, unsigned int **rkMax, int nombreLignes){
+int completionTableauxRangs(char **tableauNomNoeuds, char **tableauLignes, unsigned int **rkMin, unsigned int **rkMax, int nombreLignes){
   
   unsigned int rkM = 0;
   unsigned int rkm = 0;
@@ -235,7 +235,7 @@ int completionTableauxRangs(char ***tableauNomNoeuds, char **tableauLignes, unsi
 
     int j = 1;
 
-    while (strcmp((*tableauNomNoeuds)[j], noeud) != 0) {
+    while (strcmp((tableauNomNoeuds)[j], noeud) != 0) {
       j++;
     }
 
@@ -311,7 +311,7 @@ int parse(FILE * file, char ***tableauNomNoeuds, unsigned int **rkMin, unsigned 
 
   
   // Allocation mémoire de tableauNomNoeuds pour la prise en compte des hypothèses
-  **tableauNomNoeuds = malloc(puissance2(cardinalEnsemble) * sizeof(char*));
+  *tableauNomNoeuds = malloc(puissance2(cardinalEnsemble) * sizeof(char*));
   
   completionTableauNomNoeuds(tableauNomNoeuds, tableauLignes, separateurs, nbLignesFichier);
 
@@ -322,7 +322,7 @@ int parse(FILE * file, char ***tableauNomNoeuds, unsigned int **rkMin, unsigned 
   */
 
   // Complétion des rangs min et max
-  if (completionTableauxRangs(tableauNomNoeuds, tableauLignes, rkMin, rkMax, nbLignesFichier) == -1) return -1;
+  if (completionTableauxRangs(*tableauNomNoeuds, tableauLignes, rkMin, rkMax, nbLignesFichier) == -1) return -1;
 
   // Extraction des résultats
   if (extractionResultat(*tableauNomNoeuds, tableauLignes, nbLignesFichier, indexResult, rkMaxResult, rkMinResult) == -1) return -1;
