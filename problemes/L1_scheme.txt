@@ -1,5 +1,5 @@
 (* l1_sheme P. 141 *)
-Points A B O A' B'
+Points A A' B B' O
 Hypo ABO 3/3
 Hypo AA'O 2/2
 Hypo BB'O 2/2

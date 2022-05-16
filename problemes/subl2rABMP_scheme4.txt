@@ -2,5 +2,5 @@
 Points A B C A' B' C' O M
 Hypo ABC 3/3
 Hypo ABCA'B'C'O 3/3
-Hypo MC' 1/1
+Hypo C'M 1/1
 Result ABCM 3/3

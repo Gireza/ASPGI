@@ -1,5 +1,5 @@
 (* harmonic_conjugate p. 154 *)
-Points A B C P Q R P' Q' R' U U' D D' O
+Points A B C D P Q R D' P' Q' R' U U' O
 Hypo ABC 2/2
 Hypo AB 2/2
 Hypo AC 2/2

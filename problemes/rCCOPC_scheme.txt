@@ -1,5 +1,5 @@
 (* rCC'O'PC''_scheme p. 146 *)
-Points A B C A' B' C' O P O' C''
+Points A B C A' B' C' O O' P C''
 Hypo ABCA'B'C'O 3/3
 Hypo CC' 2/2
 Hypo ABOP 4/4
@@ -7,4 +7,4 @@ Hypo OO'P 2/2
 Hypo OO' 2/2
 Hypo CO'C'' 2/2
 Hypo C'PC'' 2/2
-Result CC'C''PO' 3/3
+Result CC'O'PC'' 3/3
