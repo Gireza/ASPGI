@@ -54,21 +54,26 @@ bool RS4(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
 
 // (RS5) si rkMax(X) + rkMax(Y) − rkMin(X ∩ Y) < rkMax(X ∪ Y) alors rkMax(X ∪ Y) prend la valeur de rkMax(X) + rkMax(Y) − rkMin(X ∩ Y)
 bool RS5(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
-  if (rkMax[x] + rkMax[y] - rkMin[intersectionEnsembles(x,y)] < rkMax[unionEnsembles(x,y)]){
+  if (rkMax[x] + rkMax[y] - rkMin[intersectionEnsembles(x,y)] > 0) {
+    if (rkMax[x] + rkMax[y] - rkMin[intersectionEnsembles(x,y)] < rkMax[unionEnsembles(x,y)]){
     appliqueRegle(verbose, "RS5", "rkMax", tableauNom[unionEnsembles(x,y)], rkMax[unionEnsembles(x,y)], rkMax[x] + rkMax[y] - rkMin[intersectionEnsembles(x,y)]);
     rkMax[unionEnsembles(x,y)] = rkMax[x] + rkMax[y] - rkMin[intersectionEnsembles(x,y)];
     return true;
+    }
   }
+  
   if (verbose > 0 ) printf("rs5 ");
   return false;
 }
 
 // (RS6) si rkMax(X) + rkMax(Y) − rkMin(X ∪ Y) < rkMax(X ∩ Y) alors rkMax(X ∩ Y) prend la valeur de rkMax(X) + rkMax(Y) − rkMin(X ∪ Y)
 bool RS6(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
-  if (rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)] < rkMax[intersectionEnsembles(x,y)]){
-    appliqueRegle(verbose, "RS6", "rkMax", tableauNom[intersectionEnsembles(x,y)], rkMax[intersectionEnsembles(x,y)], rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)]);
-    rkMax[intersectionEnsembles(x,y)] = rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)];
-    return true;
+  if (rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)] > 0) {
+    if (rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)] < rkMax[intersectionEnsembles(x,y)]){
+      appliqueRegle(verbose, "RS6", "rkMax", tableauNom[intersectionEnsembles(x,y)], rkMax[intersectionEnsembles(x,y)], rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)]);
+      rkMax[intersectionEnsembles(x,y)] = rkMax[x] + rkMax[y] - rkMin[unionEnsembles(x,y)];
+      return true;
+    }
   }
   if (verbose > 0 ) printf("rs6 ");
   return false;
@@ -76,10 +81,12 @@ bool RS6(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
 
 // (RS7) si rkMin(X ∩ Y) + rkMin(X ∪ Y) − rkMax(Y) > rkMin(X) alors rkMin(X) prend la valeur de rkMin(X ∩ Y) + rkMin(X ∪ Y) − rkMax(Y)
 bool RS7(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
-  if (rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y] > rkMin[x]){
-    appliqueRegle(verbose, "RS7", "rkMin", tableauNom[x], rkMin[x], rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y]);
-    rkMin[x] = rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y];
-    return true;
+  if (rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y] <= 4) {
+    if (rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y] > rkMin[x]){
+      appliqueRegle(verbose, "RS7", "rkMin", tableauNom[x], rkMin[x], rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y]);
+      rkMin[x] = rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[y];
+      return true;
+    }
   }
   if (verbose > 0 ) printf("rs7 ");
   return false;
@@ -87,10 +94,12 @@ bool RS7(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
 
 // (RS8) si rkMin(X ∩ Y) + rkMin(X ∪ Y) − rkMax(X) > rkMin(Y) alors rkMin(Y) prend la valeur de rkMin(X ∩ Y) + rkMin(X ∪ Y) − rkMax(X)
 bool RS8(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
-  if (rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x] > rkMin[y]){
-    appliqueRegle(verbose, "RS8", "rkMin", tableauNom[y], rkMin[y], rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x]);
-    rkMin[y] = rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x];
-    return true;
+  if (rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x] <= 4) {
+    if (rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x] > rkMin[y]){
+      appliqueRegle(verbose, "RS8", "rkMin", tableauNom[y], rkMin[y], rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x]);
+      rkMin[y] = rkMin[intersectionEnsembles(x,y)] + rkMin[unionEnsembles(x,y)] - rkMax[x];
+      return true;
+    }
   }
   if (verbose > 0 ) printf("rs8 ");
   return false;
