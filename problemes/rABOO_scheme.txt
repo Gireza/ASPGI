@@ -1,6 +1,6 @@
 (* rABOO'_scheme p. 142 *)
 Points A B P O O'
 Hypo ABPO 4/4
-Hypo OO'P 2/2
+Hypo POO' 2/2
 Hypo OO' 2/2
 Result ABOO' 4/4

@@ -1,7 +1,8 @@
 // Fichier de debug
-Points A B C' D E F G H I J
+Points A B C D
+// E F G H I J
 Hypo ABD 3/3
-Hypo AC'D 2/2
-Hypo AC' 2/2
-Hypo C'D 2/2
-Result ABC' 3/3
+Hypo ACD 2/2
+Hypo AC 2/2
+Hypo CD 2/2
+Result ABC 3/3
