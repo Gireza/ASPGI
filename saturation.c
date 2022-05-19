@@ -15,7 +15,7 @@ bool RS1(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin){
     rkMin[y] = rkMin[x];
     return true;
   }
-  if (verbose > 0 ) printf("rs1 ");
+  if (verbose > 1 ) printf("rs1 ");
   return false;
 }
 
@@ -26,7 +26,7 @@ bool RS2(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin){
     rkMin[x] = rkMin[y]; 
     return true;     
   }
-  if (verbose > 0 ) printf("rs2 ");
+  if (verbose > 1 ) printf("rs2 ");
   return false;
 }
 
@@ -37,7 +37,7 @@ bool RS3(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
     rkMax[x] = rkMax[y];
     return true;
   }
-  if (verbose > 0 ) printf("rs3 ");
+  if (verbose > 1 ) printf("rs3 ");
   return false;
 }
 
@@ -48,7 +48,7 @@ bool RS4(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMax){
     rkMax[y] = rkMax[x];
     return true;
   }
-  if (verbose > 0 ) printf("rs4 ");
+  if (verbose > 1 ) printf("rs4 ");
   return false;
 }
 
@@ -62,7 +62,7 @@ bool RS5(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
     }
   }
   
-  if (verbose > 0 ) printf("rs5 ");
+  if (verbose > 1 ) printf("rs5 ");
   return false;
 }
 
@@ -75,7 +75,7 @@ bool RS6(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
       return true;
     }
   }
-  if (verbose > 0 ) printf("rs6 ");
+  if (verbose > 1 ) printf("rs6 ");
   return false;
 }
 
@@ -88,7 +88,7 @@ bool RS7(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
       return true;
     }
   }
-  if (verbose > 0 ) printf("rs7 ");
+  if (verbose > 1 ) printf("rs7 ");
   return false;
 }
 
@@ -101,7 +101,7 @@ bool RS8(ENSEMBLE x, ENSEMBLE y, unsigned int* rkMin, unsigned int* rkMax){
       return true;
     }
   }
-  if (verbose > 0 ) printf("rs8 ");
+  if (verbose > 1 ) printf("rs8 ");
   return false;
 }
 
@@ -114,25 +114,25 @@ void saturer(unsigned int * rkMin, unsigned int * rkMax, unsigned int n_points, 
   verbose = pTerm;
 
   ENSEMBLE x = 1;
-  if (verbose > 0 ) printf("---|x:%d|--- ", x);
+  if (verbose > 1 ) printf("--|x:%d|-- ", x);
 
   while (x < nbNoeuds) {
     ENSEMBLE y = 1;
-    if (verbose > 0 ) printf("|y:%d| ", y);
+    if (verbose > 1 ) printf("|y:%d| ", y);
     while (y < nbNoeuds) {
       if (x != y && (RS1(x,y,rkMin) || RS3(x,y,rkMax) || RS2(x,y,rkMin) || RS4(x,y,rkMax) || RS5(x,y,rkMin,rkMax) || RS6(x,y,rkMin,rkMax) || RS7(x,y,rkMin,rkMax) || RS8(x,y,rkMin,rkMax))) {
         x = 1;
-        if (verbose > 0 ) printf("(x:%d ", x);
+        // if (verbose > 0 ) printf("(x:%d ", x);
         y = 1;
-        if (verbose > 0 ) printf("y:%d) ", y);
+        // if (verbose > 0 ) printf("y:%d) ", y);
       } else {
         y++;
-        if (verbose > 0 ) printf("|y:%d| ", y);
+        if (verbose > 1 ) printf("|y:%d| ", y);
       }
     }
     x++;
-    if (verbose > 0 ) printf("\n---|x:%d|--- ", x);
+    if (verbose > 1 ) printf("\n--|x:%d|-- ", x);
   }
 
-  if (verbose > 0 ) printf("\n\n");
+  if (verbose > 1 ) printf("\n\n");
 }

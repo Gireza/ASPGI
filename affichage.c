@@ -27,14 +27,14 @@ void ecritureFichier(FILE * file, char ** tableauNomNoeuds, unsigned int *rkMax,
 void appliqueRegle(int verbose, char* nomRegle, char* ensembleApplique, char* rangModifie, unsigned int ancienneValeur, unsigned int nouvelleValeur){
 
     // affichage des info
-    if (verbose == 1 ){
+    /* if (verbose == 1 ){
         printf("-----%s----- ", nomRegle);
         return;
-    }
+    } */
 
     // affichage du debug 
     if (verbose == 2){
-        printf("------la règle %s est appliquée : %s %s %d -> %d --------", nomRegle, ensembleApplique, rangModifie, ancienneValeur, nouvelleValeur);
+        printf("------la règle %s est appliquée : %s %s %d -> %d ", nomRegle, ensembleApplique, rangModifie, ancienneValeur, nouvelleValeur);
         return;
     }
 

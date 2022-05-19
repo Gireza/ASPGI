@@ -3,6 +3,7 @@
 #include "ensemble.h"
 #include "affichage.h"
 #include "string.h"
+#include "time.h"
 
 #include <stdio.h>
 
@@ -38,10 +39,12 @@ int main(int argc, char** argv){
  
   int pFich = 0;
   int pTerm = 0;
+  int pStat = 0;
   for(int i=2; i < argc; i++){
     if(strcmp(argv[i], "-f")==0) pFich = 1;
     if(strcmp(argv[i], "-t")==0) pTerm = 1;
     if(strcmp(argv[i], "-d")==0) pTerm = 2;
+    if(strcmp(argv[i], "-s")==0) pStat = 1;
   }
   
   // utilisation de parse
@@ -57,7 +60,13 @@ int main(int argc, char** argv){
   
   // DEBUT DE LA SATURATION
 
+  time_t timeDebSat = time( NULL );
+
   saturer(rkMin, rkMax, n_points, tableauNomNoeuds, pTerm);
+
+  time_t timeFinSat = time( NULL );
+
+  unsigned long dureeSaturation = difftime(timeFinSat, timeDebSat);
 
   if(pTerm>0){
   printf("Après saturation :\n\n");
@@ -79,7 +88,15 @@ int main(int argc, char** argv){
   
 
   // affihage du résultat
-  printf("Résultat attendu %s %d/%d\n\n", tableauNomNoeuds[indexResult], rkMaxResult, rkMinResult);
+  if(pTerm>0){
+  printf("Résultat attendu %s %d/%d\n", tableauNomNoeuds[indexResult], rkMaxResult, rkMinResult);
+  printf("Résultat obtenu %s %d/%d\n\n", tableauNomNoeuds[indexResult], rkMax[indexResult], rkMin[indexResult]);
+  }
+
+  // affichage durée d'exécution de la saturation
+  if(pStat==1){
+    printf("Durée de la saturation (sec) : %lu\n", dureeSaturation);
+  }
 
 
   return 0;
