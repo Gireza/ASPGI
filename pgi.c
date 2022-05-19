@@ -96,6 +96,7 @@ int main(int argc, char** argv){
   // affichage durée d'exécution de la saturation
   if(pStat==1){
     printf("Durée de la saturation (sec) : %lu\n", dureeSaturation);
+    afficherCompteurReglesAppliquees();
   }
 
 

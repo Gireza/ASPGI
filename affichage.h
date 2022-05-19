@@ -9,4 +9,6 @@ void ecritureFichier(FILE * file, char ** tableauNomNoeuds, unsigned int *rkMax,
 
 void appliqueRegle(int verbose, char* nomRegle, char* ensembleApplique, char* rangModifie, unsigned int ancienneValeur, unsigned int nouvelleValeur);
 
+void afficherCompteurReglesAppliquees();
+
 #endif

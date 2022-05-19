@@ -3,6 +3,8 @@
 #include "ensemble.h"
 #include "affichage.h"
 
+unsigned int compteurRegles = 0;
+
 /*
 Affiche les ensembles et leurs rangs dans la console
 */
@@ -38,4 +40,10 @@ void appliqueRegle(int verbose, char* nomRegle, char* ensembleApplique, char* ra
         return;
     }
 
+    compteurRegles++;
+
 }
+
+void afficherCompteurReglesAppliquees(){
+    printf("Nombre de règles appliquées : %d\n\n", compteurRegles);
+};
