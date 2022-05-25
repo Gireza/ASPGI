@@ -37,7 +37,6 @@ void appliqueRegle(int verbose, char* nomRegle, char* ensembleApplique, char* ra
     // affichage du debug 
     if (verbose == 2){
         printf("------la règle %s est appliquée : %s %s %d -> %d ", nomRegle, ensembleApplique, rangModifie, ancienneValeur, nouvelleValeur);
-        return;
     }
 
     compteurReglesAppliquees++;
