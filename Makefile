@@ -10,8 +10,6 @@ all: $(EXEC)
 pgi: $(OBJ)
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
-main.o: hello.h
-
 %.o: %.c
 	@$(CC) -o $@ -c $< $(CFLAGS)
 
